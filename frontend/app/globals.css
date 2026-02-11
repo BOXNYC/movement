@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@config '../tailwind.config.ts';
 
 @plugin "@tailwindcss/typography";
 
@@ -15,7 +16,6 @@
 
 @utility container {
   margin: 0 auto;
-  padding: 0 2rem;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -42,4 +42,21 @@
   --color-gray-950: #13141b;
 
   --default-transition-duration: 250ms;
+
+  --color-mvmnt-warmgrey: #a8a0a1;
+  --color-mvmnt-yellow: #e3ff4f;
+  --color-mvmnt-pink: #fb93f2;
+  --color-mvmnt-darkbrown: #603425;
+  --color-mvmnt-gold: #d88f00;
+  --color-mvmnt-blue: #5447f4;
+  --color-mvmnt-lightpink: #f9dff8;
+  --color-mvmnt-lightorange: #ff7733;
+  --color-mvmnt-lightblue: #b6d7d6;
+  --color-mvmnt-orange: #f95326;
+  --color-mvmnt-maroon: #960733;
+  --color-mvmnt-offwhite: #f8f9ed;
+}
+
+* {
+  transition: all;
 }

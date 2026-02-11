@@ -27,6 +27,8 @@
     "rxjs": "^7.8.2",
     "sanity": "^5.1.0",
     "sanity-plugin-asset-source-unsplash": "^7.0.0",
+    "sanity-plugin-vimeo-field": "^1.0.1",
+    "sanity-plugin-youtube-input": "^0.2.0",
     "styled-components": "^6.1.19"
   },
   "devDependencies": {

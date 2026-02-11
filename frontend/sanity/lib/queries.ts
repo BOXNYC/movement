@@ -35,6 +35,13 @@ export const getPageQuery = defineQuery(`
     slug,
     heading,
     subheading,
+    content[]{
+      ...,
+      markDefs[]{
+        ...,
+        ${linkReference}
+      }
+    },
     "pageBuilder": pageBuilder[]{
       ...,
       _type == "callToAction" => {
@@ -97,5 +104,97 @@ export const postPagesSlugs = defineQuery(`
 
 export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
+  {"slug": slug.current}
+`)
+
+export const menuItemsQuery = defineQuery(`
+  *[_type == "page" && menuItem.enabled == true] | order(coalesce(menuItem.weight, 0) asc) {
+    _id,
+    name,
+    "slug": slug.current,
+    "title": coalesce(menuItem.title, name),
+    "target": menuItem.target,
+    "weight": coalesce(menuItem.weight, 0)
+  }
+`)
+
+const workFields = /* groq */ `
+  _id,
+  "status": select(_originalId in path("drafts.**") => "draft", "published"),
+  "title": coalesce(title, "Untitled"),
+  "subtitle": subtitle,
+  "slug": slug.current,
+  excerpt,
+  coverImage,
+  tags,
+  featured,
+  "date": coalesce(date, _updatedAt),
+  "author": author->{firstName, lastName, picture},
+`
+
+export const allWorkQuery = defineQuery(`
+  *[_type == "work" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+    ${workFields}
+  }
+`)
+
+export const moreWorkQuery = defineQuery(`
+  *[_type == "work" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+    ${workFields}
+  }
+`)
+
+export const workQuery = defineQuery(`
+  *[_type == "work" && slug.current == $slug] [0] {
+    content[]{
+    ...,
+    markDefs[]{
+      ...,
+      ${linkReference}
+    }
+  },
+    ${workFields}
+    video->{
+      _id,
+      title,
+      description,
+      videoUrl,
+      "videoFileUrl": videoFile.asset->url,
+      thumbnail,
+      duration
+    },
+    vimeo,
+    youtube,
+    iframes,
+    "pageBuilder": pageBuilder[]{
+      ...,
+      _type == "callToAction" => {
+        ...,
+        button {
+          ...,
+          ${linkFields}
+        }
+      },
+      _type == "infoSection" => {
+        content[]{
+          ...,
+          markDefs[]{
+            ...,
+            ${linkReference}
+          }
+        }
+      },
+    },
+  }
+`)
+
+export const featuredWorkQuery = defineQuery(`
+  *[_type == "work" && featured == true && defined(slug.current)] | order(date desc, _updatedAt desc) {
+    ${workFields}
+  }
+`)
+
+export const workPagesSlugs = defineQuery(`
+  *[_type == "work" && defined(slug.current)]
   {"slug": slug.current}
 `)

@@ -28,7 +28,10 @@ const Post = ({post}: {post: AllPostsQueryResult[number]}) => {
       <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-100">
         {author && author.firstName && author.lastName && (
           <div className="flex items-center">
-            <Avatar person={author} small={true} />
+            <Avatar
+              person={{...author, picture: author.picture ?? undefined}}
+              small={true}
+            />
           </div>
         )}
         <time className="text-gray-500 text-xs font-mono" dateTime={date}>
@@ -74,19 +77,21 @@ export const MorePosts = async ({skip, limit}: {skip: string; limit: number}) =>
   )
 }
 
-export const AllPosts = async () => {
+export const AllPosts = async ({limit}: {limit?: number} = {}) => {
   const {data} = await sanityFetch({query: allPostsQuery})
 
   if (!data || data.length === 0) {
     return <OnBoarding />
   }
 
+  const posts = limit ? data.slice(0, limit) : data
+
   return (
     <Posts
       heading="Recent Posts"
-      subHeading={`${data.length === 1 ? 'This blog post is' : `These ${data.length} blog posts are`} populated from your Sanity Studio.`}
+      subHeading={`${posts.length === 1 ? 'This blog post is' : `These ${posts.length} blog posts are`} populated from your Sanity Studio.`}
     >
-      {data.map((post: AllPostsQueryResult[number]) => (
+      {posts.map((post: AllPostsQueryResult[number]) => (
         <Post key={post._id} post={post} />
       ))}
     </Posts>

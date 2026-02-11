@@ -1,0 +1,88 @@
+@font-face {
+  font-family: 'SpaceGroteskMed';
+  src: url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/SpaceGrotesk-Med.woff2') format('woff2'),
+      url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/SpaceGrotesk-Med.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Robuck';
+  src: url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/Robuck.woff2') format('woff2'),
+      url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/Robuck.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'ReplayMedItalic';
+  src: url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/ReplayMedItalic.woff2') format('woff2'),
+      url('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/fonts/ReplayMedItalic.woff') format('woff');
+  font-weight: normal;
+  font-style: italic;
+}
+body {
+  margin: 0; 
+  overflow: hidden; 
+  background-color: #5447f4; 
+  font-family: 'SpaceGroteskMed', sans-serif !important; 
+}
+canvas { 
+  display: block; 
+  outline: none; 
+}
+.no-select { 
+  user-select: none; 
+  -webkit-user-select: none; 
+}
+h1, h2 { 
+  font-family: 'Robuck', sans-serif !important; 
+}
+h3, i, em, .italic { 
+  font-family: 'ReplayMedItalic', sans-serif !important; 
+  font-style: normal; 
+}
+@keyframes scroll-hint {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-20px); opacity: 0; }
+}
+.animate-scroll-up { 
+  animation: scroll-hint 1.5s infinite; 
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker {
+  animation: ticker 20s linear infinite;
+}
+.ticker-paused {
+  animation-play-state: paused;
+}
+/* Updated text shadow: Reduced blur to 20px for tighter glow - ONLY DESKTOP */
+@media (min-width: 768px) {
+  #overlay-container h1, 
+  #overlay-container p {
+    text-shadow: 0px 0px 20px rgb(255, 112, 255), 0px 0px 20px rgb(255, 112, 255), 0px 0px 20px rgb(255, 112, 255), 0px 0px 20px rgb(255, 112, 255), 0px 0px 20px rgb(255, 112, 255), 0px 0px 20px rgb(255, 112, 255);
+  }
+}
+.no-shadow {
+  text-shadow: none !important;
+}
+/* Gradient background for mobile overlays only - Updated Color and Opacity */
+@media (max-width: 767px) {
+  .overlay-gradient {
+    background: linear-gradient(0deg, rgba(255, 112, 255, 0.85) 0%, rgba(255, 112, 255, 0.85) 75%, rgba(255, 112, 255, 0) 100%);
+  }
+}
+/* Pointer Events Logic: Parent none, active children auto */
+.overlay-active {
+  pointer-events: none !important;
+  opacity: 1 !important;
+}
+.overlay-active button, 
+.overlay-active a {
+  pointer-events: auto !important;
+}
+.overlay-inactive {
+  pointer-events: none !important;
+  opacity: 0 !important;
+}

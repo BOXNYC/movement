@@ -1,5 +1,6 @@
 import type {Config} from 'tailwindcss'
 import typography from '@tailwindcss/typography'
+import plugin from 'tailwindcss/plugin'
 
 export default {
   content: ['./app/**/*.{ts,tsx}', './sanity/**/*.{ts,tsx}'],
@@ -13,6 +14,20 @@ export default {
         layer: '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
       },
       colors: {
+        mvmnt: {
+          warmgrey: '#a8a0a1',
+          yellow: '#e3ff4f',
+          pink: '#fb93f2',
+          darkbrown: '#603425',
+          gold: '#d88f00',
+          blue: '#5447f4',
+          lightpink: '#f9dff8',
+          lightorange: '#ff7733',
+          lightblue: '#b6d7d6',
+          orange: '#f95326',
+          maroon: '#960733',
+          offwhite: 'hsl(65, 50%, 95.29%)', //'#f8f9ed',
+        },
         black: '#0d0e12',
         white: '#fff',
         cyan: {
@@ -36,6 +51,7 @@ export default {
           400: '#9499ad',
           500: '#727892',
           600: '#515870',
+          650: '#404040',
           700: '#383d51',
           800: '#252837',
           900: '#1b1d27',
@@ -95,13 +111,29 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['var(--font-inter)'],
-        mono: ['var(--font-ibm-plex-mono)'],
+        sans: ['var(--font-space-grotesk-med)'],
+        mono: ['var(--font-stack-monospace)'],
+        replay: ['var(--font-replay)'],
+        'replay-italic': ['var(--font-replay-med-italic)'],
+        robuck: ['var(--font-robuck)'],
+        'space-grotesk': ['var(--font-space-grotesk-med)'],
       },
     },
   },
   future: {
     hoverOnlyWhenSupported: true,
   },
-  plugins: [typography],
+  plugins: [
+    typography,
+    plugin(function({ addVariant }) {
+      addVariant('not-scrolled', '.not-scrolled &')
+      addVariant('scrolled', '.scrolled &')
+      addVariant('scrolled-1', '.scrolled-1 &')
+      addVariant('scrolled-2', '.scrolled-2 &')
+      addVariant('scrolled-3', '.scrolled-3 &')
+      addVariant('scrolled-4', '.scrolled-4 &')
+      addVariant('scrolled-5', '.scrolled-5 &')
+      addVariant('scrolled-6', '.scrolled-6 &')
+    }),
+  ],
 } satisfies Config

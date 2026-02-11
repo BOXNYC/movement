@@ -1,6 +1,8 @@
 import {person} from './documents/person'
 import {page} from './documents/page'
 import {post} from './documents/post'
+import {work} from './documents/work'
+import {mediaLibrary} from './documents/mediaLibrary'
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
 import {settings} from './singletons/settings'
@@ -8,6 +10,7 @@ import {link} from './objects/link'
 import {blockContent} from './objects/blockContent'
 import button from './objects/button'
 import {blockContentTextOnly} from './objects/blockContentTextOnly'
+import {iframeEmbed} from './objects/iframeEmbed'
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
@@ -17,7 +20,9 @@ export const schemaTypes = [
   // Documents
   page,
   post,
+  work,
   person,
+  mediaLibrary,
   // Objects
   button,
   blockContent,
@@ -25,4 +30,5 @@ export const schemaTypes = [
   infoSection,
   callToAction,
   link,
+  iframeEmbed,
 ]

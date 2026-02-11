@@ -41,6 +41,51 @@ export const page = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'content',
+      title: 'Content',
+      type: 'blockContent',
+    }),
+    defineField({
+      name: 'menuItem',
+      title: 'Menu Item',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'enabled',
+          title: 'Enabled',
+          type: 'boolean',
+          initialValue: false,
+        }),
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+          description: 'Custom title for the menu. Leave empty to use the page name.',
+        }),
+        defineField({
+          name: 'target',
+          title: 'Target',
+          type: 'string',
+          options: {
+            list: [
+              {title: 'Default', value: ''},
+              {title: 'Blank (_blank)', value: '_blank'},
+              {title: 'Top (_top)', value: '_top'},
+              {title: 'Self (_self)', value: '_self'},
+              {title: 'Parent (_parent)', value: '_parent'},
+            ],
+          },
+        }),
+        defineField({
+          name: 'weight',
+          title: 'Weight',
+          type: 'number',
+          description: 'Used to sort menu items. Lower numbers appear first.',
+          initialValue: 0,
+        }),
+      ],
+    }),
+    defineField({
       name: 'pageBuilder',
       title: 'Page builder',
       type: 'array',

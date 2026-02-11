@@ -1,5 +1,7 @@
 import Image from '@/app/components/SanityImage'
 import DateComponent from '@/app/components/Date'
+import type {SanityImageCrop, SanityImageHotspot} from '@/sanity.types'
+import {toCrop, toHotspot} from '@/sanity/lib/utils'
 
 type Props = {
   person: {
@@ -7,10 +9,10 @@ type Props = {
     lastName: string | null
     picture?: {
       asset?: {_ref: string}
-      hotspot?: {x: number; y: number}
-      crop?: {top: number; bottom: number; left: number; right: number}
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
       alt?: string
-    }
+    } | null
   }
   date?: string
   small?: boolean
@@ -29,8 +31,8 @@ export default function Avatar({person, date, small = false}: Props) {
             className="h-full rounded-full"
             height={small ? 32 : 48}
             width={small ? 32 : 48}
-            hotspot={picture.hotspot}
-            crop={picture.crop}
+            hotspot={toHotspot(picture.hotspot)}
+            crop={toCrop(picture.crop)}
             mode="cover"
           />
         </div>

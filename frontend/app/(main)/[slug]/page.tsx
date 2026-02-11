@@ -1,11 +1,18 @@
 import type {Metadata} from 'next'
 import Head from 'next/head'
+import {Suspense} from 'react'
 
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {getPageQuery, pagesSlugs} from '@/sanity/lib/queries'
 import {GetPageQueryResult} from '@/sanity.types'
 import {PageOnboarding} from '@/app/components/Onboarding'
+import {AllWork} from '@/app/components/Works'
+import { PortableText, PortableTextBlock } from 'next-sanity'
+import { AllPosts } from '../../components/Posts'
+import BG from '../../components/BG'
+import { Heading, Subheading } from '../../components/Heading'
+import Container from '../../components/Container'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -57,23 +64,39 @@ export default async function Page(props: Props) {
   }
 
   return (
-    <div className="my-12 lg:my-24">
+    <div className="mb-12 lg:mb-24 px-8">
+      <BG />
       <Head>
         <title>{page.heading}</title>
       </Head>
-      <div className="">
-        <div className="container">
-          <div className="pb-6 border-b border-gray-100">
-            <div className="max-w-3xl">
-              <h1 className="text-4xl text-gray-900 sm:text-5xl lg:text-7xl">{page.heading}</h1>
-              <p className="mt-4 text-base lg:text-lg leading-relaxed text-gray-600 uppercase font-light">
-                {page.subheading}
-              </p>
-            </div>
+      <Container>
+        <div className="pb-6 border-b border-gray-100">
+          <div className="max-w-3xl mx-auto">
+            <Heading>{page.heading}</Heading>
+            <Subheading>{page.subheading}</Subheading>
+            {/* Content field */}
+            {page.content?.length && (
+              <div className="max-w-2xl prose-headings:font-medium prose-headings:tracking-tight">
+                <PortableText
+                  value={page.content as PortableTextBlock[]}
+                />
+              </div>
+            )}
+            <PageBuilderPage page={page as GetPageQueryResult} />
+            {/* Dynamic content */}
+            {params.slug === 'our-work' && (
+              <div className="mt-8">
+                <Suspense>{await AllWork()}</Suspense>
+              </div>
+            )}
+            {params.slug === 'feed' && (
+              <div className="mt-8">
+                <Suspense>{await AllPosts()}</Suspense>
+              </div>
+            )}
           </div>
         </div>
-      </div>
-      <PageBuilderPage page={page as GetPageQueryResult} />
+      </Container>
     </div>
   )
 }

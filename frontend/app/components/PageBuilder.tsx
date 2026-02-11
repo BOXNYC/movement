@@ -53,7 +53,7 @@ function RenderSections({
   )
 }
 
-function RenderEmptyState({page}: {page: GetPageQueryResult}) {
+/* function RenderEmptyState({page}: {page: GetPageQueryResult}) {
   if (!page) {
     return null
   }
@@ -73,7 +73,7 @@ function RenderEmptyState({page}: {page: GetPageQueryResult}) {
       </div>
     </div>
   )
-}
+} */
 
 export default function PageBuilder({page}: PageBuilderPageProps) {
   const pageBuilderSections = useOptimistic<
@@ -103,6 +103,6 @@ export default function PageBuilder({page}: PageBuilderPageProps) {
   return pageBuilderSections && pageBuilderSections.length > 0 ? (
     <RenderSections pageBuilderSections={pageBuilderSections} page={page} />
   ) : (
-    <RenderEmptyState page={page} />
+    <>{/* <RenderEmptyState page={page} /> */}</>
   )
 }

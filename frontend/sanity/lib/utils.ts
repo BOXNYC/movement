@@ -1,4 +1,4 @@
-import {Link} from '@/sanity.types'
+import {Link, SanityImageCrop, SanityImageHotspot} from '@/sanity.types'
 import {dataset, projectId, studioUrl} from '@/sanity/lib/api'
 import {createDataAttribute, CreateDataAttributeProps} from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
@@ -12,7 +12,7 @@ const builder = imageUrlBuilder({
 
 // Create an image URL builder using the client
 // Export a function that can be used to get image URLs
-function urlForImage(source: SanityImageSource) {
+export function urlForImage(source: SanityImageSource) {
   return builder.image(source)
 }
 
@@ -61,4 +61,31 @@ export function dataAttr(config: DataAttributeConfig) {
     dataset,
     baseUrl: studioUrl,
   }).combine(config)
+}
+
+/**
+ * Convert Sanity's optional hotspot type to the required format expected by sanity-image
+ */
+export function toHotspot(hotspot?: SanityImageHotspot): {x: number; y: number} | undefined {
+  if (hotspot?.x !== undefined && hotspot?.y !== undefined) {
+    return {x: hotspot.x, y: hotspot.y}
+  }
+  return undefined
+}
+
+/**
+ * Convert Sanity's optional crop type to the required format expected by sanity-image
+ */
+export function toCrop(
+  crop?: SanityImageCrop
+): {top: number; bottom: number; left: number; right: number} | undefined {
+  if (
+    crop?.top !== undefined &&
+    crop?.bottom !== undefined &&
+    crop?.left !== undefined &&
+    crop?.right !== undefined
+  ) {
+    return {top: crop.top, bottom: crop.bottom, left: crop.left, right: crop.right}
+  }
+  return undefined
 }

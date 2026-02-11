@@ -16,6 +16,8 @@ import {
   type DocumentLocation,
 } from 'sanity/presentation'
 import {assist} from '@sanity/assist'
+import {vimeoField} from 'sanity-plugin-vimeo-field'
+import {youtubeInput} from 'sanity-plugin-youtube-input'
 
 // Environment variables for project configuration
 const projectId = process.env.SANITY_STUDIO_PROJECT_ID || 'your-projectID'
@@ -47,7 +49,7 @@ function resolveHref(documentType?: string, slug?: string): string | undefined {
 // Main Sanity configuration
 export default defineConfig({
   name: 'default',
-  title: 'Sanity + Next.js Starter Template',
+  title: 'Movement',
 
   projectId,
   dataset,
@@ -126,6 +128,10 @@ export default defineConfig({
     unsplashImageAsset(),
     assist(),
     visionTool(),
+    vimeoField({
+      accessToken: process.env.SANITY_STUDIO_VIMEO_ACCESS_TOKEN,
+    }),
+    youtubeInput({apiKey: process.env.SANITY_STUDIO_YOUTUBE_API_KEY || ''}),
   ],
 
   // Schema configuration, imported from ./src/schemaTypes/index.ts
