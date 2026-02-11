@@ -1,6 +1,7 @@
 import type {Metadata} from 'next'
 import Head from 'next/head'
 import {Suspense} from 'react'
+import dynamic from 'next/dynamic'
 
 import PageBuilderPage from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
@@ -10,9 +11,10 @@ import {PageOnboarding} from '@/app/components/Onboarding'
 import {AllWork} from '@/app/components/Works'
 import { PortableText, PortableTextBlock } from 'next-sanity'
 import { AllPosts } from '../../components/Posts'
-import BG from '../../components/BG'
 import { Heading, Subheading } from '../../components/Heading'
 import Container from '../../components/Container'
+
+const BG = dynamic(() => import('../../components/BG'), { ssr: false })
 
 type Props = {
   params: Promise<{slug: string}>

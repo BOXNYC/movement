@@ -2,6 +2,7 @@ import type {Metadata, ResolvingMetadata} from 'next'
 import {notFound} from 'next/navigation'
 import {type PortableTextBlock} from 'next-sanity'
 import {Suspense} from 'react'
+import dynamic from 'next/dynamic'
 
 import Avatar from '@/app/components/Avatar'
 import {MoreWork} from '@/app/components/Works'
@@ -11,8 +12,9 @@ import PageBuilder from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {workPagesSlugs, workQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage, toCrop, toHotspot} from '@/sanity/lib/utils'
-import BG from '@/app/components/BG'
 import Head from 'next/head'
+
+const BG = dynamic(() => import('@/app/components/BG'), { ssr: false })
 import { Heading, Subheading } from '@/app/components/Heading'
 import Container from '@/app/components/Container'
 
