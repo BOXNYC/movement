@@ -11,12 +11,14 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [new URL('https://cdn.sanity.io/**')],
   },
+  // Empty turbopack config to allow webpack config
+  turbopack: {},
   webpack: (config) => {
     // Alias motion/react to ensure it resolves correctly
     config.resolve.alias = {
       ...config.resolve.alias,
-      'motion/react': path.resolve(__dirname, 'node_modules/motion/react'),
-      '@floating-ui/react-dom': path.resolve(__dirname, 'node_modules/@floating-ui/react-dom'),
+      'motion/react': path.resolve(process.cwd(), 'node_modules/motion/react'),
+      '@floating-ui/react-dom': path.resolve(process.cwd(), 'node_modules/@floating-ui/react-dom'),
     }
     return config
   },

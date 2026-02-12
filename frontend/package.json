@@ -2,7 +2,7 @@
   "name": "frontend",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build": "next build --webpack",
     "predev": "npm run typegen",
     "dev": "next dev",
     "lint": "eslint .",
