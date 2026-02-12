@@ -1,3 +1,4 @@
 {
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "installCommand": "echo '{\"name\":\"root\",\"private\":true,\"dependencies\":{\"react\":\"19.2.3\",\"react-dom\":\"19.2.3\"}}' > ../package.json && rm -rf ../node_modules && npm install"
 }
