@@ -1208,6 +1208,41 @@ export type WorkQueryResult = {
 } | null
 
 // Source: sanity/lib/queries.ts
+// Variable: featuredWorkQuery
+// Query: *[_type == "work" && featured == true && defined(slug.current)] | order(date desc, _updatedAt desc) {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+export type FeaturedWorkQueryResult = Array<{
+  _id: string
+  status: 'draft' | 'published'
+  title: string | 'Untitled'
+  subtitle: string | null
+  slug: string | null
+  excerpt: string | null
+  coverImage: {
+    asset?: SanityImageAssetReference
+    media?: unknown
+    hotspot?: SanityImageHotspot
+    crop?: SanityImageCrop
+    alt?: string
+    _type: 'image'
+  } | null
+  tags: Array<string> | null
+  featured: boolean | null
+  date: string
+  author: {
+    firstName: string | null
+    lastName: string | null
+    picture: {
+      asset?: SanityImageAssetReference
+      media?: unknown
+      hotspot?: SanityImageHotspot
+      crop?: SanityImageCrop
+      alt?: string
+      _type: 'image'
+    } | null
+  } | null
+}>
+
+// Source: sanity/lib/queries.ts
 // Variable: workPagesSlugs
 // Query: *[_type == "work" && defined(slug.current)]  {"slug": slug.current}
 export type WorkPagesSlugsResult = Array<{
@@ -1230,6 +1265,7 @@ declare module '@sanity/client' {
     '\n  *[_type == "work" && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllWorkQueryResult
     '\n  *[_type == "work" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MoreWorkQueryResult
     '\n  *[_type == "work" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n    video->{\n      _id,\n      title,\n      description,\n      videoUrl,\n      "videoFileUrl": videoFile.asset->url,\n      thumbnail,\n      duration\n    },\n    vimeo,\n    youtube,\n    iframes,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': WorkQueryResult
+    '\n  *[_type == "work" && featured == true && defined(slug.current)] | order(date desc, _updatedAt desc) {\n    \n  _id,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': FeaturedWorkQueryResult
     '\n  *[_type == "work" && defined(slug.current)]\n  {"slug": slug.current}\n': WorkPagesSlugsResult
   }
 }

@@ -6,10 +6,10 @@ import { init as initHomeScript } from "@/utils/home";
 import { useEffect } from "react";
 
 export default function Home({
-  settings,
+  // settings,
   featuredWork,
 }: {
-  settings: any;
+  // settings: any;
   featuredWork: Work[];
 }) {
   
@@ -186,8 +186,13 @@ export default function Home({
           <button data-href="/careers" className="md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CAREERS</button>
         </div>
       </div>
-
       <div id="canvas-container" className="absolute inset-0 z-0"></div>
+      <style>{`
+        #canvas-container > canvas {
+          max-width: 100vw;
+          max-height: 100vh;
+        }
+      `}</style>
     </>
   );
 }
