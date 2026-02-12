@@ -1,4 +1,4 @@
 {
   "framework": "nextjs",
-  "installCommand": "rm -f ../package.json ../package-lock.json && npm install"
+  "installCommand": "echo '{\"name\":\"root\",\"private\":true}' > ../package.json && npm install"
 }
