@@ -65,7 +65,7 @@ export default async function Page(props: Props) {
 
   return (
     <div className="mb-12 lg:mb-24 px-8">
-      <BG />
+      <BG pathname={`/${params.slug}`} />
       <Head>
         <title>{page.heading}</title>
       </Head>

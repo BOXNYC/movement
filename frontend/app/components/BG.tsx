@@ -1,10 +1,6 @@
-'use client';
-
 import { getThemeFromPath } from "@/utils/theme";
-import { usePathname } from "next/navigation";
 
-export default function BG() {
-  const pathname = usePathname();
+export default function BG({ pathname }: { pathname: string }) {
   const THEME = getThemeFromPath(pathname);
 
   return (

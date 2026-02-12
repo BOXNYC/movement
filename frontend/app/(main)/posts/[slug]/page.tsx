@@ -71,7 +71,7 @@ export default async function PostPage(props: Props) {
 
   return (
     <div className="mb-12 lg:mb-24 px-8">
-      <BG />
+      <BG pathname={`/posts/${params.slug}`} />
       <Head>
         <title>{post.title}</title>
       </Head>

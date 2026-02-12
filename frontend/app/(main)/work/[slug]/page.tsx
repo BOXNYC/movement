@@ -72,7 +72,7 @@ export default async function WorkPage(props: Props) {
 
   return (
     <div className="mb-12 lg:mb-24 px-8">
-      <BG />
+      <BG pathname={`/work/${params.slug}`} />
       <Head>
         <title>{work.title}</title>
       </Head>
