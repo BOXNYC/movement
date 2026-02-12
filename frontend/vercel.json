@@ -1,4 +1,3 @@
 {
-  "framework": "nextjs",
-  "installCommand": "echo '{\"name\":\"root\",\"private\":true}' > ../package.json && npm install"
+  "framework": "nextjs"
 }
