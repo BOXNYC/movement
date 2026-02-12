@@ -1,4 +1,5 @@
 import type {NextConfig} from 'next'
+import path from 'path'
 
 const nextConfig: NextConfig = {
   serverExternalPackages: ['sanity', '@sanity/visual-editing', '@sanity/ui', 'styled-components'],
@@ -9,6 +10,15 @@ const nextConfig: NextConfig = {
   },
   images: {
     remotePatterns: [new URL('https://cdn.sanity.io/**')],
+  },
+  webpack: (config) => {
+    // Alias motion/react to ensure it resolves correctly
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'motion/react': path.resolve(__dirname, 'node_modules/motion/react'),
+      '@floating-ui/react-dom': path.resolve(__dirname, 'node_modules/@floating-ui/react-dom'),
+    }
+    return config
   },
 }
 
