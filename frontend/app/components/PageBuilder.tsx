@@ -1,5 +1,8 @@
 'use client'
 
+import {SanityDocument} from 'next-sanity'
+import {useOptimistic} from 'next-sanity/hooks'
+
 import BlockRenderer from '@/app/components/BlockRenderer'
 import {GetPageQueryResult} from '@/sanity.types'
 import {dataAttr} from '@/sanity/lib/utils'
@@ -7,6 +10,12 @@ import {PageBuilderSection} from '@/sanity/lib/types'
 
 type PageBuilderPageProps = {
   page: GetPageQueryResult
+}
+
+type PageData = {
+  _id: string
+  _type: string
+  pageBuilder?: PageBuilderSection[]
 }
 
 /**
@@ -45,7 +54,29 @@ function RenderSections({
 }
 
 export default function PageBuilder({page}: PageBuilderPageProps) {
-  const pageBuilderSections = page?.pageBuilder || []
+  const pageBuilderSections = useOptimistic<
+    PageBuilderSection[] | undefined,
+    SanityDocument<PageData>
+  >(page?.pageBuilder || [], (currentSections, action) => {
+    // The action contains updated document data from Sanity
+    // when someone makes an edit in the Studio
+
+    // If the edit was to a different document, ignore it
+    if (action.id !== page?._id) {
+      return currentSections
+    }
+
+    // If there are sections in the updated document, use them
+    if (action.document.pageBuilder) {
+      // Reconcile References. https://www.sanity.io/docs/enabling-drag-and-drop#ffe728eea8c1
+      return action.document.pageBuilder.map(
+        (section) => currentSections?.find((s) => s._key === section?._key) || section,
+      )
+    }
+
+    // Otherwise keep the current sections
+    return currentSections
+  })
 
   return pageBuilderSections && pageBuilderSections.length > 0 ? (
     <RenderSections pageBuilderSections={pageBuilderSections} page={page} />
