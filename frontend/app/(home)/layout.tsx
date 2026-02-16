@@ -1,8 +1,9 @@
 import '../globals.css'
+import './home.css'
 
 import {SpeedInsights} from '@vercel/speed-insights/next'
 import type {Metadata} from 'next'
-import localFont from 'next/font/local'
+// import localFont from 'next/font/local'
 import {toPlainText} from 'next-sanity'
 import {Toaster} from 'sonner'
 import Header from '@/app/components/Header'
