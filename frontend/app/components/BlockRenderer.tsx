@@ -2,8 +2,12 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
+import JsonData from '@/app/components/JsonData'
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
+import * as DynamicComponents from '@/app/components/Dynamic'
+
+type DynamicComponentKeys = keyof typeof DynamicComponents
 
 type BlockProps = {
   index: number
@@ -19,7 +23,15 @@ type BlocksType = {
 const Blocks = {
   callToAction: Cta,
   infoSection: Info,
+  jsonData: JsonData,
 } as BlocksType
+
+type JsonDataBlock = {
+  _type: string
+  _key: string
+  title?: string
+  data?: string
+}
 
 /**
  * Used by the <PageBuilder>, this component renders a the component that matches the block type.
@@ -27,6 +39,14 @@ const Blocks = {
 export default function BlockRenderer({block, index, pageId, pageType}: BlockProps) {
   // Block does exist
   if (typeof Blocks[block._type] !== 'undefined') {
+    if (block._type && (block._type as string) === 'jsonData') {
+      const componentName = (block as JsonDataBlock).title as DynamicComponentKeys;
+      if (componentName && componentName in DynamicComponents) {
+        return (
+          <>{React.createElement(DynamicComponents[componentName], { jsonData: JSON.parse((block as JsonDataBlock).data || '[]') })}</>
+        )
+      }
+    }
     return (
       <div
         key={block._key}
