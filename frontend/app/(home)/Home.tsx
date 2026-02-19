@@ -1,16 +1,20 @@
 'use client';
   
+import { Post } from "@/sanity.types";
 import { Work } from "@/sanity/lib/types";
 import { urlForImage } from "@/sanity/lib/utils";
 import { init as initHomeScript } from "@/utils/home";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function Home({
   // settings,
   featuredWork,
+  recentPosts,
 }: {
   // settings: any;
   featuredWork: Work[];
+  recentPosts: Post[];
 }) {
   
   useEffect(() => {
@@ -68,25 +72,9 @@ export default function Home({
             <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
               <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">{work.subtitle}</p>
             </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW PROJECT</button>
+            <Link href={`/work/${work.slug}`} className="inline-block md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW PROJECT</Link>
           </div>))}
-          {/* <div className="slide-2 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/work-klarna.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">FROM SKEPTICS TO SUPERFANS</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">KLARNA</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW PROJECT</button>
-          </div>
-          <div className="slide-3 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/work-looney-tunes.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">THE ACME INTERN</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">LOONEY TUNES</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW PROJECT</button>
-          </div> */}
-          <button data-href="/our-work" className="md:text-2xl px-4 py-2 my-2 bg-[#fb93f2] rounded-full font-bold text-[#e3ff9f] hover:bg-[#e3ff9f] hover:text-[#fb93f2] transition-all">VIEW ALL WORK</button>
+          <Link href="/our-work" className="inline-block md:text-2xl px-4 py-2 my-2 bg-[#fb93f2] rounded-full font-bold text-[#e3ff9f] hover:bg-[#e3ff9f] hover:text-[#fb93f2] transition-all">VIEW ALL WORK</Link>
         </div>
         <div id="marker-7" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
           <h1 className="text-4xl md:text-5xl lg:text-7xl text-[#5447f4] px-8 md:px-12 md:mx-12">WE DO A LOT OF THINGS, BUT BORING ISN’T ONE OF THEM.</h1>
@@ -127,63 +115,32 @@ export default function Home({
               </div>
             </div>
           </div>
-          <button data-href="/our-services" className="md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">ALL OUR SERVICES</button>
+          <Link href="/services" className="inline-block md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">ALL OUR SERVICES</Link>
         </div>
         <div id="marker-8" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
-          <div className="slide-1 text-[#5447f4]">
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/dummy1.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">LOREM IPUSM YO</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">1/3/26</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</button>
-          </div>
-          <div className="slide-2 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/dummy2.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">IPSUM LOREMS</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">12/25/25</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW PROJECT</button>
-          </div>
-          <div className="slide-3 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/dummy3.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">DOLOR SANS LOREMS</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">12/15/25</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</button>
-          </div>
-          <div className="slide-4 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/dummy4.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">YO YO YO LOREMS</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">11/15/25</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</button>
-          </div>
-          <div className="slide-5 text-[#5447f4]" style={{display: 'none'}}>
-            <img src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/dummy5.jpg" style={{display: 'none'}}/>
-            <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">LOREM YO IPSUM</h1>
-            <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-              <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">11/5/25</p>
-            </div>
-            <button className="md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</button>
-          </div>
-          <button data-href="/our-feed" className="md:text-2xl px-4 py-2 my-2 bg-[#fb93f2] rounded-full font-bold text-[#e3ff9f] hover:bg-[#e3ff9f] hover:text-[#fb93f2] transition-all">VIEW ALL POSTS</button>
+          {recentPosts.map((post: Post, index: number) => (
+            <div key={post._id} className={`slide-${index + 1} text-[#5447f4]`}>
+              <img src={post?.coverImage ? urlForImage(post?.coverImage).url() : ''} style={{display: 'none'}}/>
+              <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{post.title}</h1>
+              <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
+                <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">1/3/26</p>
+              </div>
+            <Link href={`/posts/${post.slug}`} className="inline-block md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</Link>
+          </div>))}
+          <Link href="/feed" className="inline-block md:text-2xl px-4 py-2 my-2 bg-[#fb93f2] rounded-full font-bold text-[#e3ff9f] hover:bg-[#e3ff9f] hover:text-[#fb93f2] transition-all">VIEW ALL POSTS</Link>
         </div>
         <div id="marker-9" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
           <p className="text-xl md:text-2xl italic text-[#5447f4] px-8 md:px-12 md:mx-12">It’s a Movement</p>
           <h1 className="text-4xl md:text-5xl lg:text-7xl text-[#5447f4] px-8 md:px-12 md:mx-12">DIVERSITY, EQUITY & INCLUSION</h1>
           <p className="text-lg md:text-2xl text-[#5447f4] mt-2 px-8 md:px-12 md:mx-12">An echo chamber is a bad place to be, so we actively create a culture that welcomes and supports diverse perspectives, experiences, and backgrounds.</p>
-          <button data-href="/our-culture" className="md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">OUR CUTURE</button>
+          <Link href="/people-culture" className="inline-block md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">OUR CULTURE</Link>
         </div>
         <div id="marker-10" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
           <h1 className="text-4xl md:text-5xl lg:text-7xl text-[#5447f4] px-8 md:px-12 md:mx-12">LET'S WORK TOGETHER!</h1>
           <p className="text-xl md:text-2xl italic text-[#5447f4] px-8 md:px-12 md:mx-12">(In one way or another)</p>
           <p className="text-lg md:text-2xl text-[#5447f4] mt-2 px-8 md:px-12 md:mx-12">Got a project to discuss? Interested in joining forces? Find your way below.</p>
-          <button data-href="/contact" className="md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CONTACT</button>
-          <button data-href="/careers" className="md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CAREERS</button>
+          <Link href="/contact" className="inline-block md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CONTACT</Link>
+          <Link href="/careers" className="inline-block md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CAREERS</Link>
         </div>
       </div>
       <div id="canvas-container" className="absolute inset-0 z-0"></div>
