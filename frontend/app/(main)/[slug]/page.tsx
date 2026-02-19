@@ -55,9 +55,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 const classes = {
   heading: {
     'our-work': 'text-mvmnt-darkbrown -mb-6',
+    'feed': 'text-mvmnt-blue -mb-6',
   },
   subheading: {
     'our-work': 'relative text-mvmnt-darkbrown bg-mvmnt-pink text-xl font-base w-fit px-4 py-1 my-0 mx-auto',
+    'feed': 'relative text-mvmnt-blue bg-mvmnt-gold text-xl font-base w-fit px-4 py-1 my-0 mx-auto',
   }
 }
 

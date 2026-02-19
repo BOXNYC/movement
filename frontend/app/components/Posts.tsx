@@ -3,15 +3,28 @@ import Link from 'next/link'
 import {sanityFetch} from '@/sanity/lib/live'
 import {morePostsQuery, allPostsQuery} from '@/sanity/lib/queries'
 import {AllPostsQueryResult} from '@/sanity.types'
-import DateComponent from '@/app/components/Date'
+// import DateComponent from '@/app/components/Date'
 import OnBoarding from '@/app/components/Onboarding'
-import Avatar from '@/app/components/Avatar'
-import {dataAttr} from '@/sanity/lib/utils'
+// import Avatar from '@/app/components/Avatar'
+import {dataAttr, urlForImage} from '@/sanity/lib/utils'
+import Image from 'next/image'
 
-const Post = ({post}: {post: AllPostsQueryResult[number]}) => {
-  const {_id, title, slug, excerpt, date, author} = post
+const Post = ({post, itemIndex}: {post: AllPostsQueryResult[number]; itemIndex: number}) => {
+  const {_id, title, slug, excerpt, date, author, coverImage} = post
+  const isEven = itemIndex % 2 === 0;
 
   return (
+		<section className="w-full relative mb-20 block">
+			{coverImage && <Image width={800} height={450} src={urlForImage(coverImage).url()} alt={title} className={`block ${isEven ? 'ml-0' : 'ml-auto'} w-[80%] lg:w-[90%] h-auto aspect-video object-cover rounded-xl`} />}
+			<div className={`absolute top-[15px] md:top-[30px] ${isEven ? 'right-0' : 'left-0'} text-left z-10 flex flex-col items-start max-w-[35%]`}>
+				<h2 className="font-robuck text-[var(--color-mvmnt-blue)] bg-[var(--color-mvmnt-gold)] p-4 pb-5 m-0 text-2xl md:text-4xl leading-tight w-max max-w-full">{title}</h2>
+				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{new Date(date).toLocaleDateString()}</p>
+				<Link href={`/posts/${slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-gold)] bg-[var(--color-mvmnt-blue)] rounded-full hover:bg-[var(--color-mvmnt-gold)] hover:text-[var(--color-mvmnt-blue)] m-0 md:text-[1.25rem] md:leading-[1.25rem]">VIEW POST</Link>
+			</div>
+		</section>
+  )
+
+  /* return (
     <article
       data-sanity={dataAttr({id: _id, type: 'post', path: 'title'}).toString()}
       key={_id}
@@ -39,7 +52,7 @@ const Post = ({post}: {post: AllPostsQueryResult[number]}) => {
         </time>
       </div>
     </article>
-  )
+  ) */
 }
 
 const Posts = ({
@@ -70,8 +83,8 @@ export const MorePosts = async ({skip, limit}: {skip: string; limit: number}) =>
 
   return (
     <Posts heading={`Recent Posts (${data?.length})`}>
-      {data?.map((post: AllPostsQueryResult[number]) => (
-        <Post key={post._id} post={post} />
+      {data?.map((post: AllPostsQueryResult[number], index: number) => (
+        <Post key={post._id} post={post} itemIndex={index} />
       ))}
     </Posts>
   )
@@ -87,12 +100,9 @@ export const AllPosts = async ({limit}: {limit?: number} = {}) => {
   const posts = limit ? data.slice(0, limit) : data
 
   return (
-    <Posts
-      heading="Recent Posts"
-      subHeading={`${posts.length === 1 ? 'This blog post is' : `These ${posts.length} blog posts are`} populated from your Sanity Studio.`}
-    >
-      {posts.map((post: AllPostsQueryResult[number]) => (
-        <Post key={post._id} post={post} />
+    <Posts>
+      {posts.map((post: AllPostsQueryResult[number], index: number) => (
+        <Post key={post._id} post={post} itemIndex={index} />
       ))}
     </Posts>
   )
