@@ -4,7 +4,6 @@ import Link from 'next/link'
 import NavLink from './NavLink'
 import Image from 'next/image'
 import { useState } from 'react';
-import { usePathname } from 'next/navigation';
 import { cn } from '@/utils/className';
 
 export default function HeaderClient({alt, menuItems}: {alt: string, menuItems: Array<{
@@ -15,9 +14,7 @@ export default function HeaderClient({alt, menuItems}: {alt: string, menuItems: 
     target: "" | "_blank" | "_parent" | "_self" | "_top" | null;
     weight: number;
 }>}) {
-  const pathname = usePathname();
   const [expanded, setExpanded] = useState<boolean>(false);
-  if (pathname === '/') return;
   return (<>
     <header className="sticky top-0 z-50 flex items-center mb-4 md:mb-16 scrolled-6:mb-[93px]">
       <div className="mx-auto flex">
