@@ -28,6 +28,7 @@ type JsonDataBlock = {
   _key: string
   title?: string
   data?: string
+  componentType?: string
 }
 
 /**
@@ -37,7 +38,7 @@ export default function BlockRenderer({block, index, pageId, pageType}: BlockPro
   // Handle jsonData blocks with dynamic components
   if ((block._type as string) === 'jsonData') {
     const jsonBlock = block as unknown as JsonDataBlock
-    const componentName = jsonBlock.title as DynamicComponentKeys
+    const componentName = jsonBlock.componentType as DynamicComponentKeys
     if (componentName && componentName in DynamicComponents) {
       const Component = DynamicComponents[componentName]
       const jsonData = jsonBlock.data ? JSON.parse(jsonBlock.data) : []
@@ -46,7 +47,7 @@ export default function BlockRenderer({block, index, pageId, pageType}: BlockPro
     // Fallback: show raw JSON if no matching dynamic component
     return (
       <div className="my-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-        <p className="text-gray-500">No component found for: {jsonBlock.title}</p>
+        <p className="text-gray-500">No component found for: {jsonBlock.componentType}</p>
         <pre className="mt-2 text-sm">{jsonBlock.data}</pre>
       </div>
     )

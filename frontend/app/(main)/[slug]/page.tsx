@@ -13,7 +13,6 @@ import { AllPosts } from '../../components/Posts'
 import BG from '../../components/BG'
 import { Heading, Subheading } from '../../components/Heading'
 import Container from '../../components/Container'
-import Services from '@/app/components/Services'
 import Parenthetical from '@/app/components/Parenthetical'
 
 type Props = {
@@ -98,9 +97,6 @@ export default async function Page(props: Props) {
               <div className="mt-8">
                 <Suspense>{await AllPosts()}</Suspense>
               </div>
-            )}
-            {params.slug === 'services' && (
-              <Services />
             )}
           </div>
         </div>
