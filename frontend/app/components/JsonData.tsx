@@ -1,10 +1,14 @@
-import {PageBuilderSection} from '@/sanity/lib/types'
-
-type JsonDataBlock = Extract<PageBuilderSection, {_type: 'jsonData'}>
+type JsonDataBlock = {
+  _type: 'jsonData'
+  _key: string
+  title?: string
+  componentType?: string
+  data?: string
+}
 
 type JsonDataProps = {
   index: number
-  block: PageBuilderSection
+  block: JsonDataBlock
   pageId: string
   pageType: string
 }
@@ -14,12 +18,10 @@ type JsonDataProps = {
  * The data is parsed and can be used to render custom components.
  */
 export default function JsonData({block}: JsonDataProps) {
-  const jsonBlock = block as JsonDataBlock
-
   let parsedData: unknown = null
   try {
-    if (jsonBlock.data) {
-      parsedData = JSON.parse(jsonBlock.data)
+    if (block.data) {
+      parsedData = JSON.parse(block.data)
     }
   } catch {
     // Invalid JSON - will show error state
@@ -29,11 +31,11 @@ export default function JsonData({block}: JsonDataProps) {
   // For now, it displays the raw JSON data for debugging/preview
   return (
     <div className="my-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
-      {jsonBlock.title && (
-        <h3 className="text-lg font-semibold mb-2 text-gray-700">{jsonBlock.title}</h3>
+      {block.title && (
+        <h3 className="text-lg font-semibold mb-2 text-gray-700">{block.title}</h3>
       )}
-      {jsonBlock.componentType && (
-        <p className="text-sm text-gray-500 mb-4">Component: {jsonBlock.componentType}</p>
+      {block.componentType && (
+        <p className="text-sm text-gray-500 mb-4">Component: {block.componentType}</p>
       )}
       {parsedData ? (
         <pre className="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm">

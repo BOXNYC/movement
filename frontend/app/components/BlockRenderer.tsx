@@ -2,7 +2,6 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
-import JsonData from '@/app/components/JsonData'
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 import * as DynamicComponents from '@/app/components/Dynamic'
@@ -16,18 +15,16 @@ type BlockProps = {
   pageType: string
 }
 
-type BlocksType = {
-  [key: string]: React.FC<BlockProps>
-}
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type BlocksType = Record<string, React.FC<any>>
 
-const Blocks = {
+const Blocks: BlocksType = {
   callToAction: Cta,
   infoSection: Info,
-  jsonData: JsonData,
-} as BlocksType
+}
 
 type JsonDataBlock = {
-  _type: string
+  _type: 'jsonData'
   _key: string
   title?: string
   data?: string
@@ -37,16 +34,26 @@ type JsonDataBlock = {
  * Used by the <PageBuilder>, this component renders a the component that matches the block type.
  */
 export default function BlockRenderer({block, index, pageId, pageType}: BlockProps) {
+  // Handle jsonData blocks with dynamic components
+  if ((block._type as string) === 'jsonData') {
+    const jsonBlock = block as unknown as JsonDataBlock
+    const componentName = jsonBlock.title as DynamicComponentKeys
+    if (componentName && componentName in DynamicComponents) {
+      const Component = DynamicComponents[componentName]
+      const jsonData = jsonBlock.data ? JSON.parse(jsonBlock.data) : []
+      return <Component jsonData={jsonData} />
+    }
+    // Fallback: show raw JSON if no matching dynamic component
+    return (
+      <div className="my-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+        <p className="text-gray-500">No component found for: {jsonBlock.title}</p>
+        <pre className="mt-2 text-sm">{jsonBlock.data}</pre>
+      </div>
+    )
+  }
+
   // Block does exist
   if (typeof Blocks[block._type] !== 'undefined') {
-    if (block._type && (block._type as string) === 'jsonData') {
-      const componentName = (block as JsonDataBlock).title as DynamicComponentKeys;
-      if (componentName && componentName in DynamicComponents) {
-        return (
-          <>{React.createElement(DynamicComponents[componentName], { jsonData: JSON.parse((block as JsonDataBlock).data || '[]') })}</>
-        )
-      }
-    }
     return (
       <div
         key={block._key}
@@ -66,13 +73,11 @@ export default function BlockRenderer({block, index, pageId, pageType}: BlockPro
       </div>
     )
   }
+
   // Block doesn't exist yet
-  return React.createElement(
-    () => (
-      <div className="w-full bg-gray-100 text-center text-gray-500 p-20 rounded">
-        A &ldquo;{block._type}&rdquo; block hasn&apos;t been created
-      </div>
-    ),
-    {key: block._key},
+  return (
+    <div className="w-full bg-gray-100 text-center text-gray-500 p-20 rounded">
+      A &ldquo;{block._type}&rdquo; block hasn&apos;t been created
+    </div>
   )
 }
