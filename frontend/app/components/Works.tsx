@@ -3,15 +3,31 @@ import Link from 'next/link'
 import {sanityFetch} from '@/sanity/lib/live'
 import {moreWorkQuery, allWorkQuery} from '@/sanity/lib/queries'
 import {AllWorkQueryResult} from '@/sanity.types'
-import DateComponent from '@/app/components/Date'
+// import DateComponent from '@/app/components/Date'
 import {WorkOnboarding} from '@/app/components/Onboarding'
-import Avatar from '@/app/components/Avatar'
-import {dataAttr} from '@/sanity/lib/utils'
+// import Avatar from '@/app/components/Avatar' 
+import {dataAttr, urlForImage} from '@/sanity/lib/utils'
+import Image from 'next/image'
 
-const WorkItem = ({work}: {work: AllWorkQueryResult[number]}) => {
-  const {_id, title, slug, excerpt, date, author, tags, featured} = work
-
+const WorkItem = ({work, itemIndex}: {work: AllWorkQueryResult[number], itemIndex: number}) => {
+  const {_id, title, slug, coverImage, subtitle, /* excerpt, date, author, tags, featured */} = work
+  const isEven = itemIndex % 2 === 0;
+  
   return (
+    <section 
+      data-sanity={dataAttr({id: _id, type: 'work', path: 'title'}).toString()}
+      className="w-full relative mb-20 block"
+    >
+      {coverImage && <Image alt={title} src={urlForImage(coverImage).url()} width={800} height={450} className={`block ${isEven ? 'ml-auto' : 'ml-0'} w-[80%] lg:w-[90%] h-auto aspect-video object-cover rounded-xl`} />}
+			<div className={`absolute top-[15px] md:top-[30px] ${isEven ? 'left-0' : 'right-0'} text-left z-10 flex flex-col items-start max-w-[35%]`}>
+				<h2 className="text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] p-4 pb-5 m-0 text-2xl md:text-4xl leading-tight w-max max-w-full">{title}</h2>
+				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{subtitle}</p>
+				<Link href={`/work/${slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] rounded-full hover:bg-[var(--color-mvmnt-darkbrown)] hover:text-[var(--color-mvmnt-pink)] m-0 md:text-[1.25rem] md:leading-[1.25rem]">VIEW PROJECT</Link>
+			</div>
+		</section>
+  );
+
+  /* return (
     <article
       data-sanity={dataAttr({id: _id, type: 'work', path: 'title'}).toString()}
       key={_id}
@@ -58,7 +74,7 @@ const WorkItem = ({work}: {work: AllWorkQueryResult[number]}) => {
         </time>
       </div>
     </article>
-  )
+  ) */
 }
 
 const Works = ({
@@ -89,8 +105,8 @@ export const MoreWork = async ({skip, limit}: {skip: string; limit: number}) => 
 
   return (
     <Works heading={`More Work (${data?.length})`}>
-      {data?.map((work: AllWorkQueryResult[number]) => (
-        <WorkItem key={work._id} work={work} />
+      {data?.map((work: AllWorkQueryResult[number], index: number) => (
+        <WorkItem key={work._id} work={work} itemIndex={index} />
       ))}
     </Works>
   )
@@ -111,12 +127,9 @@ export const AllWork = async ({featuredOnly}: {featuredOnly?: boolean} = {}) => 
   }
 
   return (
-    <Works
-      heading={featuredOnly ? 'Featured Work' : 'Our Work'}
-      subHeading={featuredOnly ? undefined : `${workItems.length === 1 ? 'This work item is' : `These ${workItems.length} work items are`} populated from your Sanity Studio.`}
-    >
-      {workItems.map((work: AllWorkQueryResult[number]) => (
-        <WorkItem key={work._id} work={work} />
+    <Works>
+      {workItems.map((work: AllWorkQueryResult[number], index: number) => (
+        <WorkItem key={work._id} work={work} itemIndex={index} />
       ))}
     </Works>
   )

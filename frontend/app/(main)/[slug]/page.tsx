@@ -52,6 +52,22 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   } satisfies Metadata
 }
 
+const classes = {
+  heading: {
+    'our-work': 'text-mvmnt-darkbrown -mb-6',
+  },
+  subheading: {
+    'our-work': 'relative text-mvmnt-darkbrown bg-mvmnt-pink text-xl font-base w-fit px-4 py-1 my-0 mx-auto',
+  }
+}
+
+const getClasses = (type: keyof typeof classes, slug: string) => {
+  if (slug in classes[type]) {
+    return classes[type][slug as keyof typeof classes[typeof type]]
+  }
+  return ''
+}
+
 export default async function Page(props: Props) {
   const params = await props.params
   const [{data: page}] = await Promise.all([sanityFetch({query: getPageQuery, params})])
@@ -73,8 +89,8 @@ export default async function Page(props: Props) {
       <Container>
         <div className="pb-6 border-b border-gray-100">
           <div className="max-w-3xl mx-auto">
-            <Heading>{page.heading}</Heading>
-            <Subheading>{page.subheading}</Subheading>
+            <Heading className={getClasses('heading', params.slug)}>{page.heading}</Heading>
+            <Subheading className={getClasses('subheading', params.slug)}>{page.subheading}</Subheading>
             {page.parenthetical && (
               <Parenthetical>{page.parenthetical}</Parenthetical>
             )}  
@@ -89,12 +105,12 @@ export default async function Page(props: Props) {
             <PageBuilderPage page={page as GetPageQueryResult} />
             {/* Dynamic content */}
             {params.slug === 'our-work' && (
-              <div className="mt-8">
+              <div className="mt-8 max-w-6xl mx-auto">
                 <Suspense>{await AllWork()}</Suspense>
               </div>
             )}
             {params.slug === 'feed' && (
-              <div className="mt-8">
+              <div className="mt-8 max-w-6xl mx-auto">
                 <Suspense>{await AllPosts()}</Suspense>
               </div>
             )}

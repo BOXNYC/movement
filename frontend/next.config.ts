@@ -18,6 +18,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: '39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com',
+      }
     ],
   },
   turbopack: {
