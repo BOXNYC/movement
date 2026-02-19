@@ -163,8 +163,7 @@ export const workQuery = defineQuery(`
       thumbnail,
       duration
     },
-    vimeo,
-    youtube,
+    videoEmbed,
     iframes,
     "pageBuilder": pageBuilder[]{
       ...,

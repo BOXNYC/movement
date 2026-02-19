@@ -11,6 +11,7 @@ import {blockContent} from './objects/blockContent'
 import button from './objects/button'
 import {blockContentTextOnly} from './objects/blockContentTextOnly'
 import {iframeEmbed} from './objects/iframeEmbed'
+import {videoEmbed} from './objects/videoEmbed'
 
 // Export an array of all the schema types.  This is used in the Sanity Studio configuration. https://www.sanity.io/docs/schema-types
 
@@ -31,4 +32,5 @@ export const schemaTypes = [
   callToAction,
   link,
   iframeEmbed,
+  videoEmbed,
 ]

@@ -7,6 +7,7 @@ import Avatar from '@/app/components/Avatar'
 import {MoreWork} from '@/app/components/Works'
 import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
+import VideoEmbed from '@/app/components/VideoEmbed'
 import PageBuilder from '@/app/components/PageBuilder'
 import {sanityFetch} from '@/sanity/lib/live'
 import {workPagesSlugs, workQuery} from '@/sanity/lib/queries'
@@ -111,7 +112,14 @@ export default async function WorkPage(props: Props) {
           </div>
           <article className="gap-6 grid max-w-4xl">
             <div className="">
-              {work?.coverImage && (
+              {work?.videoEmbed?.url ? (
+                <VideoEmbed
+                  url={work.videoEmbed.url}
+                  title={work.videoEmbed.title}
+                  aspectRatio={work.videoEmbed.aspectRatio}
+                  className="w-full"
+                />
+              ) : work?.coverImage ? (
                 <Image
                   id={work.coverImage.asset?._ref || ''}
                   alt={work.coverImage.alt || ''}
@@ -122,7 +130,7 @@ export default async function WorkPage(props: Props) {
                   hotspot={toHotspot(work.coverImage.hotspot)}
                   crop={toCrop(work.coverImage.crop)}
                 />
-              )}
+              ) : null}
             </div>
             {work.content?.length && (
               <PortableText

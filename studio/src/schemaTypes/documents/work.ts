@@ -97,14 +97,9 @@ export const work = defineType({
       to: [{type: 'mediaLibrary'}],
     }),
     defineField({
-      name: 'vimeo',
-      title: 'Vimeo',
-      type: 'vimeo',
-    }),
-    defineField({
-      name: 'youtube',
-      title: 'YouTube',
-      type: 'youtubeVideo',
+      name: 'videoEmbed',
+      title: 'Video Embed',
+      type: 'videoEmbed',
     }),
     defineField({
       name: 'iframes',
