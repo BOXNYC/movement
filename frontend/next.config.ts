@@ -9,10 +9,23 @@ const nextConfig: NextConfig = {
     SC_DISABLE_SPEEDY: 'false',
   },
   images: {
-    remotePatterns: [new URL('https://cdn.sanity.io/**')],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn.sanity.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
+    ],
   },
-  // Empty turbopack config to allow webpack config
-  turbopack: {},
+  turbopack: {
+    resolveAlias: {
+      'motion/react': 'motion/react',
+      '@floating-ui/react-dom': '@floating-ui/react-dom',
+    },
+  },
   webpack: (config) => {
     // Alias motion/react to ensure it resolves correctly
     config.resolve.alias = {

@@ -41,6 +41,12 @@ export const page = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'parenthetical',
+      title: 'Parenthetical',
+      type: 'string',
+      description: 'Optional parenthetical text displayed alongside the heading',
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'blockContent',

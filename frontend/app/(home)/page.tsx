@@ -19,7 +19,7 @@ export default async function Page() {
 
   return (
     <>
-      <Home recentPosts={recentPosts} /* settings={settings} */ featuredWork={featuredWork} />
+      <Home recentPosts={recentPosts ?? []} /* settings={settings} */ featuredWork={featuredWork ?? []} />
     </>
   )
 }

@@ -1,7 +1,6 @@
 'use client';
-  
-import { Post } from "@/sanity.types";
-import { Work } from "@/sanity/lib/types";
+
+import { FeaturedWorkQueryResult, RecentPostsQueryResult } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/utils";
 import { init as initHomeScript } from "@/utils/home";
 import Link from "next/link";
@@ -13,8 +12,8 @@ export default function Home({
   recentPosts,
 }: {
   // settings: any;
-  featuredWork: Work[];
-  recentPosts: Post[];
+  featuredWork: FeaturedWorkQueryResult;
+  recentPosts: RecentPostsQueryResult;
 }) {
   
   useEffect(() => {
@@ -66,7 +65,7 @@ export default function Home({
         
         {/* Updated Overlays: px-8 (was px-10) md:px-12 md:mx-12, text-4xl md:text-6xl, mt-[-15px] md:mt-[-20px] */}
         <div id="marker-6" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
-          {featuredWork && featuredWork.map((work: Work, index: number)=>(<div key={index} className={`slide-${index + 1} text-[#5447f4]`} style={index > 0 ? {display: 'none'} : undefined}>
+          {featuredWork && featuredWork.map((work, index) =>(<div key={index} className={`slide-${index + 1} text-[#5447f4]`} style={index > 0 ? {display: 'none'} : undefined}>
             <img src={work.coverImage ? urlForImage(work.coverImage).url() : ''} style={{display: 'none'}}/>
             <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{work.title}</h1>
             <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
@@ -118,7 +117,7 @@ export default function Home({
           <Link href="/services" className="inline-block md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">ALL OUR SERVICES</Link>
         </div>
         <div id="marker-8" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
-          {recentPosts.map((post: Post, index: number) => (
+          {recentPosts.map((post, index) => (
             <div key={post._id} className={`slide-${index + 1} text-[#5447f4]`}>
               <img src={post?.coverImage ? urlForImage(post?.coverImage).url() : ''} style={{display: 'none'}}/>
               <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{post.title}</h1>
