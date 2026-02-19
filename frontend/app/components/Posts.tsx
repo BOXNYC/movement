@@ -6,7 +6,7 @@ import {AllPostsQueryResult} from '@/sanity.types'
 // import DateComponent from '@/app/components/Date'
 import OnBoarding from '@/app/components/Onboarding'
 // import Avatar from '@/app/components/Avatar'
-import {dataAttr, urlForImage} from '@/sanity/lib/utils'
+import {/* dataAttr, */ urlForImage} from '@/sanity/lib/utils'
 import Image from 'next/image'
 
 const Post = ({post, itemIndex}: {post: AllPostsQueryResult[number]; itemIndex: number}) => {
