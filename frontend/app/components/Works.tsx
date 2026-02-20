@@ -18,10 +18,10 @@ const WorkItem = ({work, itemIndex}: {work: AllWorkQueryResult[number], itemInde
       data-sanity={dataAttr({id: _id, type: 'work', path: 'title'}).toString()}
       className="w-full relative mb-20 block"
     >
-      {coverImage && <Image alt={title} src={urlForImage(coverImage).url()} width={800} height={450} className={`block ${isEven ? 'ml-auto' : 'ml-0'} w-[80%] lg:w-[90%] h-auto aspect-video object-cover rounded-xl`} />}
-			<div className={`absolute top-[15px] md:top-[30px] ${isEven ? 'left-0' : 'right-0'} text-left z-10 flex flex-col items-start max-w-[35%]`}>
+      {coverImage && <Image alt={title} src={urlForImage(coverImage).url()} width={800} height={450} className={`block ${isEven ? 'ml-auto' : 'ml-0'} w-full md:w-[85%] h-auto aspect-video object-cover rounded-xl`} />}
+			<div className={`relative md:absolute px-3 md:px-0 top-0 md:top-[15px] md:top-[30px] text-center md:text-left z-10 flex flex-col items-center md:items-start w-full md:max-w-[35%] mt-2 md:mt-0 ${isEven ? 'left-0' : 'right-0'}`}>
 				<h2 className="text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] p-4 pb-5 m-0 text-2xl md:text-4xl leading-tight w-max max-w-full">{title}</h2>
-				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{subtitle}</p>
+				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] md:ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{subtitle}</p>
 				<Link href={`/work/${slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] rounded-full hover:bg-[var(--color-mvmnt-darkbrown)] hover:text-[var(--color-mvmnt-pink)] m-0 md:text-[1.25rem] md:leading-[1.25rem]">VIEW PROJECT</Link>
 			</div>
 		</section>

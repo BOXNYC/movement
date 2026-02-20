@@ -14,6 +14,7 @@ import BG from '../../components/BG'
 import { Heading, Subheading } from '../../components/Heading'
 import Container from '../../components/Container'
 import Parenthetical from '@/app/components/Parenthetical'
+import HubspotContactForm from '@/app/components/HubspotContactForm'
 
 type Props = {
   params: Promise<{slug: string}>
@@ -115,6 +116,9 @@ export default async function Page(props: Props) {
               <div className="mt-8 max-w-6xl mx-auto">
                 <Suspense>{await AllPosts()}</Suspense>
               </div>
+            )}
+            {params.slug === 'contact' && (
+              <HubspotContactForm />
             )}
           </div>
         </div>

@@ -3,6 +3,7 @@ import {page} from './documents/page'
 import {post} from './documents/post'
 import {work} from './documents/work'
 import {mediaLibrary} from './documents/mediaLibrary'
+import {teamMember} from './documents/teamMember'
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
 import {settings} from './singletons/settings'
@@ -25,6 +26,7 @@ export const schemaTypes = [
   work,
   person,
   mediaLibrary,
+  teamMember,
   // Objects
   button,
   blockContent,

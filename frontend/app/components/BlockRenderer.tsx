@@ -2,9 +2,10 @@ import React from 'react'
 
 import Cta from '@/app/components/Cta'
 import Info from '@/app/components/InfoSection'
-import {dataAttr} from '@/sanity/lib/utils'
+import {dataAttr, urlForImage} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 import * as DynamicComponents from '@/app/components/Dynamic'
+import {client} from '@/sanity/lib/client'
 
 type DynamicComponentKeys = keyof typeof DynamicComponents
 
@@ -31,17 +32,50 @@ type JsonDataBlock = {
   componentType?: string
 }
 
+type SanityTeamMember = {
+  _id: string
+  name: string
+  jobTitle: string
+  portrait?: {
+    asset?: {
+      _ref: string
+    }
+  }
+}
+
 /**
  * Used by the <PageBuilder>, this component renders a the component that matches the block type.
  */
-export default function BlockRenderer({block, index, pageId, pageType}: BlockProps) {
+export default async function BlockRenderer({block, index, pageId, pageType}: BlockProps) {
   // Handle jsonData blocks with dynamic components
   if ((block._type as string) === 'jsonData') {
     const jsonBlock = block as unknown as JsonDataBlock
     const componentName = jsonBlock.componentType as DynamicComponentKeys
     if (componentName && componentName in DynamicComponents) {
       const Component = DynamicComponents[componentName]
-      const jsonData = jsonBlock.data ? JSON.parse(jsonBlock.data) : []
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let jsonData: any = jsonBlock.data ? JSON.parse(jsonBlock.data) : {}
+
+      // For PeopleCulture, fetch team members from Sanity
+      if (componentName === 'PeopleCulture') {
+        const teamMembers = await client.fetch<SanityTeamMember[]>(
+          `*[_type == "teamMember"] | order(name asc) {
+            _id,
+            name,
+            jobTitle,
+            portrait
+          }`
+        )
+        jsonData.leadership = (teamMembers || []).map((member) => ({
+          _id: member._id,
+          name: member.name,
+          jobTitle: member.jobTitle,
+          portraitUrl: member.portrait
+            ? urlForImage(member.portrait).width(200).height(200).fit('crop').url()
+            : undefined,
+        }))
+      }
+
       return <Component jsonData={jsonData} />
     }
     // Fallback: show raw JSON if no matching dynamic component

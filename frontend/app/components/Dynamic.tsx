@@ -10,16 +10,17 @@ type ERGItem = {
   bulletPoints?: string[];
 };
 
-type LeadershipPerson = {
+type TeamMember = {
+  _id: string;
   name: string;
-  role: string;
-  image: string;
+  jobTitle: string;
+  portraitUrl?: string;
 };
 
 type PeopleCultureData = {
   ergs: ERGItem[];
-  leadership: LeadershipPerson[];
   benefits: string[];
+  leadership: TeamMember[];
 };
 
 export function PeopleCulture({jsonData}: {jsonData: PeopleCultureData}) {
@@ -31,7 +32,7 @@ export function PeopleCulture({jsonData}: {jsonData: PeopleCultureData}) {
 
   const isOpen = (index: number) => openRow === index;
 
-  const { ergs = [], leadership = [], benefits = [] } = jsonData || {};
+  const { ergs = [], benefits = [], leadership = [] } = jsonData || {};
 
   return (
     <>
@@ -123,18 +124,20 @@ export function PeopleCulture({jsonData}: {jsonData: PeopleCultureData}) {
         <h1 className="font-robuck text-6xl text-[#5447f4] mb-12 text-center">LEADERSHIP</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-y-12 gap-x-4 md:gap-x-8 mb-24">
-          {leadership.map((person: LeadershipPerson, index: number) => (
-            <div key={index} className="flex flex-col items-center text-center min-w-0">
+          {leadership.map((person: TeamMember) => (
+            <div key={person._id} className="flex flex-col items-center text-center min-w-0">
               <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-4 bg-gray-200">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={person.image}
-                  alt={person.name}
-                  className="w-full h-full object-cover grayscale"
-                />
+                {person.portraitUrl && (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={person.portraitUrl}
+                    alt={person.name}
+                    className="w-full h-full object-cover grayscale"
+                  />
+                )}
               </div>
               <h3 className="text-4xl text-mvmnt-blue font-bold mb-1">{person.name}</h3>
-              <p className="semibold text-xl text-mvmnt-blue font-replay-italic">{person.role}</p>
+              <p className="semibold text-xl text-mvmnt-blue font-replay-italic">{person.jobTitle}</p>
             </div>
           ))}
         </div>

@@ -15,10 +15,10 @@ const Post = ({post, itemIndex}: {post: AllPostsQueryResult[number]; itemIndex: 
 
   return (
 		<section className="w-full relative mb-20 block">
-			{coverImage && <Image width={800} height={450} src={urlForImage(coverImage).url()} alt={title} className={`block ${isEven ? 'ml-0' : 'ml-auto'} w-[80%] lg:w-[90%] h-auto aspect-video object-cover rounded-xl`} />}
-			<div className={`absolute top-[15px] md:top-[30px] ${isEven ? 'right-0' : 'left-0'} text-left z-10 flex flex-col items-start max-w-[35%]`}>
+			{coverImage && <Image width={800} height={450} src={urlForImage(coverImage).url()} alt={title} className={`block ${isEven ? 'ml-0' : 'ml-auto'} w-full md:w-[85%] h-auto aspect-video object-cover rounded-xl`} />}
+			<div className={`relative md:absolute px-3 md:px-0 top-0 md:top-[15px] md:top-[30px] text-center md:text-left z-10 flex flex-col items-center md:items-start w-full md:max-w-[35%] mt-2 md:mt-0 ${isEven ? 'right-0' : 'left-0'}`}>
 				<h2 className="font-robuck text-[var(--color-mvmnt-blue)] bg-[var(--color-mvmnt-gold)] p-4 pb-5 m-0 text-2xl md:text-4xl leading-tight w-max max-w-full">{title}</h2>
-				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{new Date(date).toLocaleDateString()}</p>
+				<p className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-2 -mt-[15px] md:ml-[15px] mb-[10px] md:mb-[25px] w-max max-w-full md:text-[1.25rem] md:leading-[1.25rem]">{new Date(date).toLocaleDateString()}</p>
 				<Link href={`/posts/${slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-gold)] bg-[var(--color-mvmnt-blue)] rounded-full hover:bg-[var(--color-mvmnt-gold)] hover:text-[var(--color-mvmnt-blue)] m-0 md:text-[1.25rem] md:leading-[1.25rem]">VIEW POST</Link>
 			</div>
 		</section>
