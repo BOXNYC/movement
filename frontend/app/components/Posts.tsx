@@ -82,7 +82,7 @@ export const MorePosts = async ({skip, limit}: {skip: string; limit: number}) =>
   }
 
   return (
-    <Posts heading={`Recent Posts (${data?.length})`}>
+    <Posts heading={`Recent Posts`}>
       {data?.map((post: AllPostsQueryResult[number], index: number) => (
         <Post key={post._id} post={post} itemIndex={index} />
       ))}

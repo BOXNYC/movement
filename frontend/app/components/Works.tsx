@@ -104,7 +104,7 @@ export const MoreWork = async ({skip, limit}: {skip: string; limit: number}) => 
   }
 
   return (
-    <Works heading={`More Work (${data?.length})`}>
+    <Works heading={`More Work`}>
       {data?.map((work: AllWorkQueryResult[number], index: number) => (
         <WorkItem key={work._id} work={work} itemIndex={index} />
       ))}

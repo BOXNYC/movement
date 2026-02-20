@@ -79,14 +79,14 @@ export default async function WorkPage(props: Props) {
       </Head>
       <Container className="grid gap-12">
         <div>
-          <div className="pb-6 grid gap-6 mb-6 border-b border-gray-100">
+          <div className="pb-6 grid gap-6 mb-6">
             <div className="mx-auto flex flex-col gap-6">
-              <Heading>{work.title}</Heading>
+              <Heading className="text-mvmnt-darkbrown -mb-11 leading-[1]">{work.title}</Heading>
               {work.subtitle && (
-                <Subheading>{work.subtitle}</Subheading>
+                <Subheading className="text-mvmnt-darkbrown bg-mvmnt-pink text-xl font-base w-fit px-4 py-1 my-0 mx-auto">{work.subtitle}</Subheading>
               )}
             </div>
-            <div className="mx-auto flex gap-4 items-center">
+            {/* <div className="mx-auto flex gap-4 items-center">
               {work.author && work.author.firstName && work.author.lastName && (
                 <Avatar
                   person={{
@@ -108,7 +108,7 @@ export default async function WorkPage(props: Props) {
                   ))}
                 </div>
               )}
-            </div>
+            </div> */}
           </div>
           <article className="gap-6 grid max-w-4xl">
             <div className="">
@@ -141,7 +141,7 @@ export default async function WorkPage(props: Props) {
             {work.pageBuilder && work.pageBuilder.length > 0 && (
               <PageBuilder page={work as any} />
             )}
-            <div className="border-t border-gray-100 bg-gray-50">
+            <div className="">
               <div className="py-12 lg:py-24 grid gap-12">
                 <aside>
                   <Suspense>{await MoreWork({skip: work._id, limit: 2})}</Suspense>
