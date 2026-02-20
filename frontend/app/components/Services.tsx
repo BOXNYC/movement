@@ -74,7 +74,7 @@ export default function Services() {
             >
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
                 <div className="md:col-span-5 lg:col-span-5">
-                  <h1 className="font-robuck text-6xl md:text-[6vw] text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
+                  <h1 className="font-robuck text-5xl md:text-[4vw] text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
                     {service.title}
                   </h1>
                 </div>
@@ -82,7 +82,7 @@ export default function Services() {
                   <p className="text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
                     {service.description}
                   </p>
-                  <div className="hidden md:block text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
+                  <div className="text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="16"
@@ -116,7 +116,7 @@ export default function Services() {
                         alt={service.title}
                         src={service.image}
                         fill
-                        className="object-cover grayscale"
+                        className="object-cover"
                       />
                     </div>
                   </div>
