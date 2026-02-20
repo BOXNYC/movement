@@ -36,7 +36,7 @@ export function PeopleCulture({jsonData}: {jsonData: PeopleCultureData}) {
 
   return (
     <>
-      <p className="text-xl text-[#5447f4] max-w-[800px] mx-auto mb-12 text-center">
+      <p className="text-xl text-[#5447f4] max-w-[800px] mx-auto mb-12 text-center px-4">
 				An echo chamber is a bad place to be, so we actively create a culture that welcomes and supports diverse perspectives, experiences, and backgrounds. Interested to learn more? Check out our Employee Resource Groups.
 			</p>
       {/* ERG List Container */}
@@ -52,15 +52,15 @@ export function PeopleCulture({jsonData}: {jsonData: PeopleCultureData}) {
                 onClick={() => toggleRow(index)}
                 className="w-full text-left focus:outline-none py-8 md:py-12 relative z-10 block"
               >
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-baseline">
+                <div className="grid grid-cols-2 md:grid-cols-12 gap-6 items-baseline">
                   <div className="md:col-span-10 lg:col-span-11">
-                    <h1 className="font-robuck text-6xl md:text-[6vw] text-[#fb93f2] group-hover:text-[#5447f4] group-data-[state=open]:text-[#5447f4]">
+                    <h1 className="font-robuck text-5xl md:text-[4vw] text-[#fb93f2] group-hover:text-[#5447f4] group-data-[state=open]:text-[#5447f4]">
                       {erg.title}
                     </h1>
                   </div>
                   <div className="md:col-span-2 lg:col-span-1 flex justify-end items-baseline md:pl-8 pr-4 md:pr-0">
                     {/* Icons */}
-                    <div className="hidden md:block text-[#fb93f2] group-hover:text-[#5447f4] group-data-[state=open]:text-[#5447f4]">
+                    <div className="text-[#fb93f2] group-hover:text-[#5447f4] group-data-[state=open]:text-[#5447f4]">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -195,7 +195,7 @@ export function Services({jsonData}: {jsonData: Array<{
                     {data.title}
                   </h1>
                 </div>
-                <div className="md:col-span-7 lg:col-span-7 flex justify-between items-baseline md:pl-8 pr-4 md:pr-0">
+                <div className="md:col-span-7 lg:col-span-7 flex justify-between items-center gap-6 md:pl-8 pr-4 md:pr-0">
                   <p className="text-[#a8a0a1] group-hover:text-[#404040] group-data-[state=open]:text-[#404040]">
                     {data.description}
                   </p>

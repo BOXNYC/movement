@@ -1,6 +1,6 @@
 import { cn } from "@/utils/className"
 
-const subheadingClasses = 'text-6xl mt-4 leading-[0.85em] text-mvmnt-blue text-center uppercase font-robuck';
+const subheadingClasses = 'text-6xl mt-4 leading-[0.85em] text-mvmnt-blue text-center uppercase font-robuck px-4';
 
 export function Heading({ children, className }: { children: React.ReactNode, className?: string }) {
   return (
