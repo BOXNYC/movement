@@ -78,10 +78,10 @@ export default async function PostPage(props: Props) {
       <Container className="mb-12 lg:mb-24 grid gap-12">
         <div>
           <div className="pb-6 grid gap-6 mb-6 border-b border-gray-100">
-            <div className="max-w-3xl mx-auto flex flex-col gap-6">
+            <div className="mx-auto flex flex-col gap-6">
               <Heading>{post.title}</Heading>
             </div>
-            <div className="max-w-3xl mx-auto flex gap-4 items-center">
+            <div className="mx-auto flex gap-4 items-center">
               {post.author && post.author.firstName && post.author.lastName && (
                 <Avatar
                   person={{

@@ -91,7 +91,7 @@ export default async function Page(props: Props) {
       </Head>
       <Container>
         <div className="pb-6 border-b border-gray-100">
-          <div className="max-w-3xl mx-auto">
+          <div className="mx-auto">
             <Heading className={getClasses('heading', params.slug)}>{page.heading}</Heading>
             <Subheading className={getClasses('subheading', params.slug)}>{page.subheading}</Subheading>
             {page.parenthetical && (

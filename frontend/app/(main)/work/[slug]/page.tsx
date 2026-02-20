@@ -80,13 +80,13 @@ export default async function WorkPage(props: Props) {
       <Container className="grid gap-12">
         <div>
           <div className="pb-6 grid gap-6 mb-6 border-b border-gray-100">
-            <div className="max-w-3xl mx-auto flex flex-col gap-6">
+            <div className="mx-auto flex flex-col gap-6">
               <Heading>{work.title}</Heading>
               {work.subtitle && (
                 <Subheading>{work.subtitle}</Subheading>
               )}
             </div>
-            <div className="max-w-3xl mx-auto flex gap-4 items-center">
+            <div className="mx-auto flex gap-4 items-center">
               {work.author && work.author.firstName && work.author.lastName && (
                 <Avatar
                   person={{
