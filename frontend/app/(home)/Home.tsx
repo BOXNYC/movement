@@ -122,7 +122,7 @@ export default function Home({
               <img src={post?.coverImage ? urlForImage(post?.coverImage).url() : ''} style={{display: 'none'}}/>
               <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{post.title}</h1>
               <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
-                <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">1/3/26</p>
+                <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">{new Date(post.date).toLocaleDateString()}</p>
               </div>
             <Link href={`/posts/${post.slug}`} className="inline-block md:text-2xl px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">VIEW POST</Link>
           </div>))}

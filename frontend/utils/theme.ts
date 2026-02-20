@@ -45,13 +45,21 @@ export const THEME = {
    * Color palette for the People & Culture page
   */
   LIGHTPINK_BLUE: {
-    BACKGROUND: `bg-mvmnt-lightpink from-mvmnt-lightblue via-mvmnt-lightblue ${backgroundGradient}`, // foreground: mvmnt-lightblue
+    BACKGROUND: `bg-mvmnt-lightpink from-mvmnt-blue via-mvmnt-blue ${backgroundGradient}`, // foreground: mvmnt-lightblue
     NAV_LINK: 'text-mvmnt-blue bg-mvmnt-lightpink',
     CONTAINER: 'bg-mvmnt-offwhite',
     TEXT: 'mvmnt-lightpink',
     ACTIVE: 'mvmnt-lightblue',
     PRIMARY: 'mvmnt-lightblue',
   },
+  /* LIGHTPINK_BLUE: {
+    BACKGROUND: `bg-mvmnt-lightpink from-mvmnt-lightblue via-mvmnt-lightblue ${backgroundGradient}`, // foreground: mvmnt-lightblue
+    NAV_LINK: 'text-mvmnt-blue bg-mvmnt-lightpink',
+    CONTAINER: 'bg-mvmnt-offwhite',
+    TEXT: 'mvmnt-lightpink',
+    ACTIVE: 'mvmnt-lightblue',
+    PRIMARY: 'mvmnt-lightblue',
+  }, */
   /**
    * Color palette for the Careers page
   */

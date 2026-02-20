@@ -69,7 +69,7 @@ export default function HeaderClient({alt, menuItems}: {alt: string, menuItems: 
                 {menuItems?.map((item) => (
                 <li key={item._id} className="group inline-flex items-start justify-start md:items-end md:justify-end scrolled-6:items-start scrolled-6:justify-start">
                   <NavLink
-                    className="font-replay uppercase text-lg font-bold inline-flex justify-start items-start md:justify-end md:items-end md:hover:h-full max-md:group-hover:w-full scrolled-6:justify-start scrolled-6:items-start scrolled-6:group-hover:w-full"
+                    className="font-replay uppercase text-lg font-bold inline-flex justify-start items-start md:justify-end md:items-end md:hover:h-full scrolled-6:justify-start scrolled-6:items-start scrolled-6:w-full max-md:w-full"
                     activeClassName="md:h-full max-md:w-full scrolled-6:w-full scrolled-6:!font-replay-italic scrolled-6:!tracking-[1] md:scrolled-6:text-2xl max-md:!font-replay-italic max-md:!tracking-[1] max-md:text-xl scrolled-6:italic max-md:italic scrolled-6:!normal-case max-md:!normal-case"
                     onClick={() => setExpanded(false)} href={`/${item.slug}`} target={item.target || undefined}
                   >
@@ -86,7 +86,7 @@ export default function HeaderClient({alt, menuItems}: {alt: string, menuItems: 
     </header>
     {expanded && (
       <div
-        className="fixed top-0 left-0 right-0 w-full h-screen !h-[100dvh] bg-mvmnt-offwhite/80 backdrop-blur-md md:hidden md:scrolled-6:block"
+        className="fixed top-0 left-0 right-0 w-full h-screen !h-[100dvh] bg-mvmnt-offwhite/80 backdrop-blur-md md:hidden md:scrolled-6:block z-[20]"
         onClick={() => setExpanded(false)}
       />
     )}
