@@ -125,7 +125,7 @@ export const WorkNavigation = async ({currentOrderRank}: {currentOrderRank: stri
   return (
     <nav className="flex flex-col md:flex-row md:justify-between gap-8">
       {data.previous ? (
-        <div className="relative flex-1">
+        <Link href={`/work/${data.previous.slug}`} className="relative flex-1 block">
           {data.previous.coverImage && (
             <Image
               alt={data.previous.title}
@@ -136,16 +136,16 @@ export const WorkNavigation = async ({currentOrderRank}: {currentOrderRank: stri
             />
           )}
           <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-left z-10 flex flex-col items-center md:items-start w-full mt-2 md:mt-0 left-0">
-            <span className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-1 text-sm mb-2">← Previous Project</span>
-            <h3 className="text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] p-3 pb-4 m-0 text-xl md:text-2xl leading-tight w-max max-w-full">{data.previous.title}</h3>
-            <Link href={`/work/${data.previous.slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] rounded-full hover:bg-[var(--color-mvmnt-darkbrown)] hover:text-[var(--color-mvmnt-pink)] mt-2 md:-mt-[10px] md:ml-[15px]">VIEW PROJECT</Link>
+            <span className="bg-mvmnt-darkbrown text-mvmnt-offwhite px-3 py-1 text-sm mb-2 -translate-x-3">← Previous Project</span>
+            <h2 className="font-robuck text-mvmnt-darkbrown bg-mvmnt-pink p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.previous.title}</h2>
+            <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.previous.subtitle}</h3>
           </div>
-        </div>
+        </Link>
       ) : (
         <div className="flex-1" />
       )}
       {data.next ? (
-        <div className="relative flex-1">
+        <Link href={`/work/${data.next.slug}`} className="relative flex-1">
           {data.next.coverImage && (
             <Image
               alt={data.next.title}
@@ -156,11 +156,11 @@ export const WorkNavigation = async ({currentOrderRank}: {currentOrderRank: stri
             />
           )}
           <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-right z-10 flex flex-col items-center md:items-end w-full mt-2 md:mt-0 right-0">
-            <span className="bg-[var(--color-mvmnt-darkbrown)] text-[var(--color-mvmnt-offwhite)] px-3 py-1 text-sm mb-2">Next Project →</span>
-            <h3 className="text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] p-3 pb-4 m-0 text-xl md:text-2xl leading-tight w-max max-w-full">{data.next.title}</h3>
-            <Link href={`/work/${data.next.slug}`} className="px-3 md:px-5 py-2 text-[var(--color-mvmnt-darkbrown)] bg-[var(--color-mvmnt-pink)] rounded-full hover:bg-[var(--color-mvmnt-darkbrown)] hover:text-[var(--color-mvmnt-pink)] mt-2 md:-mt-[10px] md:mr-[15px]">VIEW PROJECT</Link>
+            <span className="bg-mvmnt-darkbrown text-mvmnt-offwhite px-3 py-1 text-sm mb-2 translate-x-3">Next Project →</span>
+            <h2 className="font-robuck text-mvmnt-darkbrown bg-mvmnt-pink p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.next.title}</h2>
+            <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.next.subtitle}</h3>
           </div>
-        </div>
+        </Link>
       ) : (
         <div className="flex-1" />
       )}

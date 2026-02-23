@@ -66,7 +66,7 @@ export default function Home({
         {/* Updated Overlays: px-8 (was px-10) md:px-12 md:mx-12, text-4xl md:text-6xl, mt-[-15px] md:mt-[-20px] */}
         <div id="marker-6" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
           {featuredWork && featuredWork.map((work, index) =>(<div key={index} className={`slide-${index + 1} text-[#5447f4]`} style={index > 0 ? {display: 'none'} : undefined}>
-            <img src={work.coverImage ? urlForImage(work.coverImage).url() : ''} style={{display: 'none'}}/>
+            <img alt="" src={work.coverImage ? urlForImage(work.coverImage).url() : ''} style={{display: 'none'}}/>
             <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{work.title}</h1>
             <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
               <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">{work.subtitle}</p>
@@ -119,7 +119,7 @@ export default function Home({
         <div id="marker-8" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
           {recentPosts.map((post, index) => (
             <div key={post._id} className={`slide-${index + 1} text-[#5447f4]`}>
-              <img src={post?.coverImage ? urlForImage(post?.coverImage).url() : ''} style={{display: 'none'}}/>
+              <img alt="" src={post?.coverImage ? urlForImage(post?.coverImage).url() : ''} style={{display: 'none'}}/>
               <h1 className="text-4xl md:text-6xl px-8 md:px-12 md:mx-12">{post.title}</h1>
               <div className="relative block mt-[-15px] md:mt-[-20px] px-8 md:px-12 md:mx-12">
                 <p className="relative px-2 py-1 bg-[#e3ff4f] text-black inline-block font-bold mb-2 no-shadow">{new Date(post.date).toLocaleDateString()}</p>
@@ -135,7 +135,7 @@ export default function Home({
           <Link href="/people-culture" className="inline-block md:text-2xl my-5 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">OUR CULTURE</Link>
         </div>
         <div id="marker-10" className="absolute bottom-0 pb-4 pt-[50px] md:py-5 left-0 w-full text-center transition-opacity duration-500 opacity-0 overlay-inactive overlay-gradient">
-          <h1 className="text-4xl md:text-5xl lg:text-7xl text-[#5447f4] px-8 md:px-12 md:mx-12">LET'S WORK TOGETHER!</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-7xl text-[#5447f4] px-8 md:px-12 md:mx-12">LET’S WORK TOGETHER!</h1>
           <p className="text-xl md:text-2xl italic text-[#5447f4] px-8 md:px-12 md:mx-12">(In one way or another)</p>
           <p className="text-lg md:text-2xl text-[#5447f4] mt-2 px-8 md:px-12 md:mx-12">Got a project to discuss? Interested in joining forces? Find your way below.</p>
           <Link href="/contact" className="inline-block md:text-2xl my-5 mx-1 px-4 py-2 bg-[#e3ff4f] rounded-full font-bold text-black hover:bg-black hover:text-[#e3ff4f] transition-all">CONTACT</Link>

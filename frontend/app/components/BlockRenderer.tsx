@@ -53,8 +53,7 @@ export default async function BlockRenderer({block, index, pageId, pageType}: Bl
     const componentName = jsonBlock.componentType as DynamicComponentKeys
     if (componentName && componentName in DynamicComponents) {
       const Component = DynamicComponents[componentName]
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      let jsonData: any = jsonBlock.data ? JSON.parse(jsonBlock.data) : {}
+      const jsonData = jsonBlock.data ? JSON.parse(jsonBlock.data) : {}
 
       // For PeopleCulture, fetch team members from Sanity
       if (componentName === 'PeopleCulture') {

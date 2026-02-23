@@ -139,7 +139,7 @@ export default async function WorkPage(props: Props) {
               />
             )}
             {work.pageBuilder && work.pageBuilder.length > 0 && (
-              <PageBuilder page={work as any} />
+              <PageBuilder page={work} />
             )}
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">

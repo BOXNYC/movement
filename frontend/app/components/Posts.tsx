@@ -10,7 +10,7 @@ import {/* dataAttr, */ urlForImage} from '@/sanity/lib/utils'
 import Image from 'next/image'
 
 const Post = ({post, itemIndex}: {post: AllPostsQueryResult[number]; itemIndex: number}) => {
-  const {_id, title, slug, excerpt, date, author, coverImage} = post
+  const {title, slug, date, coverImage} = post
   const isEven = itemIndex % 2 === 0;
 
   return (

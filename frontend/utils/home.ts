@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js';
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
 import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js';
@@ -126,16 +125,6 @@ interface NavDotItem {
   dot: HTMLDivElement;
   label: HTMLSpanElement;
   activeIndices: number[];
-}
-
-interface TextDataItem {
-  index: number;
-  content: string;
-  y: number;
-  zOffset: number;
-  xOffset?: number;
-  yRotate?: number;
-  size?: number;
 }
 
 interface ExtendedGroup extends THREE.Group {
@@ -1971,7 +1960,6 @@ export function init(): (() => void) | undefined {
     }
 
     let blobActive = false;
-    let slideActive = false;
     let vidActive = false; 
     const activeSld = new Set();
     
