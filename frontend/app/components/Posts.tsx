@@ -1,7 +1,7 @@
 import Link from 'next/link'
 
 import {sanityFetch} from '@/sanity/lib/live'
-import {morePostsQuery, allPostsQuery} from '@/sanity/lib/queries'
+import {morePostsQuery, allPostsQuery, adjacentPostQuery} from '@/sanity/lib/queries'
 import {AllPostsQueryResult} from '@/sanity.types'
 // import DateComponent from '@/app/components/Date'
 import OnBoarding from '@/app/components/Onboarding'
@@ -87,6 +87,84 @@ export const MorePosts = async ({skip, limit}: {skip: string; limit: number}) =>
         <Post key={post._id} post={post} itemIndex={index} />
       ))}
     </Posts>
+  )
+}
+
+export const PostNavigation = async ({currentCreatedAt, currentId}: {currentCreatedAt: string; currentId: string}) => {
+  const {data} = await sanityFetch({
+    query: adjacentPostQuery,
+    params: {currentCreatedAt, currentId},
+  })
+
+  if (!data || (!data.previous && !data.next && !data.related)) {
+    return null
+  }
+
+  return (
+    <div className="flex flex-col gap-12">
+      <nav className="flex flex-col md:flex-row md:justify-between gap-8">
+        {data.previous ? (
+          <Link href={`/posts/${data.previous.slug}`} className="relative flex-1 block">
+            {data.previous.coverImage && (
+              <Image
+                alt={data.previous.title}
+                src={urlForImage(data.previous.coverImage).url()}
+                width={600}
+                height={338}
+                className="w-full h-auto aspect-video object-cover rounded-xl"
+              />
+            )}
+            <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-left z-10 flex flex-col items-center md:items-start w-full mt-2 md:mt-0 left-0">
+              <span className="bg-mvmnt-blue text-mvmnt-offwhite px-3 py-1 text-sm mb-2 -translate-x-3">← Previous Post</span>
+              <h2 className="font-robuck text-mvmnt-blue bg-mvmnt-gold p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.previous.title}</h2>
+              {data.previous._createdAt && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{new Date(data.previous._createdAt).toLocaleDateString()}</h3>}
+            </div>
+          </Link>
+        ) : (
+          <div className="flex-1" />
+        )}
+        {data.next ? (
+          <Link href={`/posts/${data.next.slug}`} className="relative flex-1">
+            {data.next.coverImage && (
+              <Image
+                alt={data.next.title}
+                src={urlForImage(data.next.coverImage).url()}
+                width={600}
+                height={338}
+                className="w-full h-auto aspect-video object-cover rounded-xl"
+              />
+            )}
+            <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-right z-10 flex flex-col items-center md:items-end w-full mt-2 md:mt-0 right-0">
+              <span className="bg-mvmnt-blue text-mvmnt-offwhite px-3 py-1 text-sm mb-2 translate-x-3">Next Post →</span>
+              <h2 className="font-robuck text-mvmnt-blue bg-mvmnt-gold p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.next.title}</h2>
+              {data.next._createdAt && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{new Date(data.next._createdAt).toLocaleDateString()}</h3>}
+            </div>
+          </Link>
+        ) : (
+          <div className="flex-1" />
+        )}
+      </nav>
+      {data.related && (
+        <div className="flex justify-center">
+          <Link href={`/posts/${data.related.slug}`} className="relative w-full md:w-2/3">
+            {data.related.coverImage && (
+              <Image
+                alt={data.related.title}
+                src={urlForImage(data.related.coverImage).url()}
+                width={800}
+                height={450}
+                className="w-full h-auto aspect-video object-cover rounded-xl"
+              />
+            )}
+            <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center z-10 flex flex-col items-center w-full mt-2 md:mt-0 left-1/2 md:-translate-x-1/2">
+              <span className="bg-mvmnt-blue text-mvmnt-offwhite px-3 py-1 text-sm mb-2">Related Post</span>
+              <h2 className="font-robuck text-mvmnt-blue bg-mvmnt-gold p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.related.title}</h2>
+              {data.related._createdAt && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{new Date(data.related._createdAt).toLocaleDateString()}</h3>}
+            </div>
+          </Link>
+        </div>
+      )}
+    </div>
   )
 }
 

@@ -112,10 +112,10 @@ export const MoreWork = async ({skip, limit}: {skip: string; limit: number}) => 
   )
 }
 
-export const WorkNavigation = async ({currentOrderRank, currentId}: {currentOrderRank: string; currentId: string}) => {
+export const WorkNavigation = async ({currentDate, currentId}: {currentDate: string; currentId: string}) => {
   const {data} = await sanityFetch({
     query: adjacentWorkQuery,
-    params: {currentOrderRank, currentId},
+    params: {currentDate, currentId},
   })
 
   if (!data || (!data.previous && !data.next && !data.related)) {
@@ -139,7 +139,7 @@ export const WorkNavigation = async ({currentOrderRank, currentId}: {currentOrde
             <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-left z-10 flex flex-col items-center md:items-start w-full mt-2 md:mt-0 left-0">
               <span className="bg-mvmnt-darkbrown text-mvmnt-offwhite px-3 py-1 text-sm mb-2 -translate-x-3">← Previous Project</span>
               <h2 className="font-robuck text-mvmnt-darkbrown bg-mvmnt-pink p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.previous.title}</h2>
-              <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.previous.subtitle}</h3>
+              {data.previous.subtitle && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.previous.subtitle}</h3>}
             </div>
           </Link>
         ) : (
@@ -159,7 +159,7 @@ export const WorkNavigation = async ({currentOrderRank, currentId}: {currentOrde
             <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center md:text-right z-10 flex flex-col items-center md:items-end w-full mt-2 md:mt-0 right-0">
               <span className="bg-mvmnt-darkbrown text-mvmnt-offwhite px-3 py-1 text-sm mb-2 translate-x-3">Next Project →</span>
               <h2 className="font-robuck text-mvmnt-darkbrown bg-mvmnt-pink p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.next.title}</h2>
-              <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.next.subtitle}</h3>
+              {data.next.subtitle && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.next.subtitle}</h3>}
             </div>
           </Link>
         ) : (
@@ -181,7 +181,7 @@ export const WorkNavigation = async ({currentOrderRank, currentId}: {currentOrde
             <div className="relative md:absolute px-3 md:px-0 top-0 md:top-[15px] text-center z-10 flex flex-col items-center w-full mt-2 md:mt-0 left-1/2 md:-translate-x-1/2">
               <span className="bg-mvmnt-darkbrown text-mvmnt-offwhite px-3 py-1 text-sm mb-2">Related Project</span>
               <h2 className="font-robuck text-mvmnt-darkbrown bg-mvmnt-pink p-3 m-0 text-2xl md:text-3xl lg:text-4xl leading-tight w-max max-w-full -mb-3">{data.related.title}</h2>
-              <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.related.subtitle}</h3>
+              {data.related.subtitle && <h3 className="text-mvmnt-offwhite bg-mvmnt-darkbrown p-3 m-0 leading-tight w-max max-w-full">{data.related.subtitle}</h3>}
             </div>
           </Link>
         </div>

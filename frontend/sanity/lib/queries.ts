@@ -4,6 +4,7 @@ export const settingsQuery = defineQuery(`*[_type == "settings"][0]`)
 
 const postFields = /* groq */ `
   _id,
+  _createdAt,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
   "slug": slug.current,
@@ -74,19 +75,19 @@ export const sitemapData = defineQuery(`
 `)
 
 export const allPostsQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+  *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {
     ${postFields}
   }
 `)
 
 export const recentPostsQuery = defineQuery(`
-  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [0...5] {
+  *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [0...5] {
     ${postFields}
   }
 `)
 
 export const morePostsQuery = defineQuery(`
-  *[_type == "post" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+  *[_type == "post" && _id != $skip && defined(slug.current)] | order(_createdAt desc) [0...$limit] {
     ${postFields}
   }
 `)
@@ -107,6 +108,32 @@ export const postQuery = defineQuery(`
 export const postPagesSlugs = defineQuery(`
   *[_type == "post" && defined(slug.current)]
   {"slug": slug.current}
+`)
+
+export const adjacentPostQuery = defineQuery(`
+  {
+    "previous": *[_type == "post" && defined(slug.current) && _createdAt > $currentCreatedAt] | order(_createdAt asc) [0] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      _createdAt,
+      "slug": slug.current,
+      coverImage
+    },
+    "next": *[_type == "post" && defined(slug.current) && _createdAt < $currentCreatedAt] | order(_createdAt desc) [0] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      _createdAt,
+      "slug": slug.current,
+      coverImage
+    },
+    "related": *[_type == "post" && defined(slug.current) && _id != $currentId && _createdAt != $currentCreatedAt] | order(_createdAt desc) [0] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      _createdAt,
+      "slug": slug.current,
+      coverImage
+    }
+  }
 `)
 
 export const pagesSlugs = defineQuery(`
@@ -208,21 +235,21 @@ export const workPagesSlugs = defineQuery(`
 
 export const adjacentWorkQuery = defineQuery(`
   {
-    "previous": *[_type == "work" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {
+    "previous": *[_type == "work" && defined(slug.current) && date < $currentDate] | order(date desc) [0] {
       _id,
       "title": coalesce(title, "Untitled"),
       subtitle,
       "slug": slug.current,
       coverImage
     },
-    "next": *[_type == "work" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {
+    "next": *[_type == "work" && defined(slug.current) && date > $currentDate] | order(date asc) [0] {
       _id,
       "title": coalesce(title, "Untitled"),
       subtitle,
       "slug": slug.current,
       coverImage
     },
-    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {
+    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && date != $currentDate] | order(date desc) [0] {
       _id,
       "title": coalesce(title, "Untitled"),
       subtitle,

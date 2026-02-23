@@ -4,7 +4,7 @@ import {type PortableTextBlock} from 'next-sanity'
 import {Suspense} from 'react'
 
 import Avatar from '@/app/components/Avatar'
-import {MorePosts} from '@/app/components/Posts'
+import {PostNavigation} from '@/app/components/Posts'
 import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
 import {sanityFetch} from '@/sanity/lib/live'
@@ -117,7 +117,7 @@ export default async function PostPage(props: Props) {
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">
                 <aside>
-                  <Suspense>{await MorePosts({skip: post._id, limit: 2})}</Suspense>
+                  <Suspense>{post._createdAt && await PostNavigation({currentCreatedAt: post._createdAt, currentId: post._id})}</Suspense>
                 </aside>
               </div>
             </div>
