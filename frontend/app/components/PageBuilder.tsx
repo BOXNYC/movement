@@ -9,7 +9,7 @@ interface PageWithPageBuilder {
 }
 
 type PageBuilderPageProps = {
-  page: PageWithPageBuilder
+  page: PageWithPageBuilder | null
 }
 
 /**
