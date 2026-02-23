@@ -3,8 +3,8 @@ import {notFound} from 'next/navigation'
 import {type PortableTextBlock} from 'next-sanity'
 import {Suspense} from 'react'
 
-import Avatar from '@/app/components/Avatar'
-import {MoreWork} from '@/app/components/Works'
+// import Avatar from '@/app/components/Avatar'
+import {WorkNavigation} from '@/app/components/Works'
 import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
 import VideoEmbed from '@/app/components/VideoEmbed'
@@ -144,7 +144,7 @@ export default async function WorkPage(props: Props) {
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">
                 <aside>
-                  <Suspense>{await MoreWork({skip: work._id, limit: 2})}</Suspense>
+                  <Suspense>{work.orderRank && await WorkNavigation({currentOrderRank: work.orderRank})}</Suspense>
                 </aside>
               </div>
             </div>

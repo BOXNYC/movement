@@ -60,3 +60,20 @@
 * {
   transition: all;
 }
+
+/* Content */
+.prose * {
+  @apply text-mvmnt-darkbrown;
+}
+.prose h1 {
+  @apply text-4xl lg:text-5xl font-robuck text-mvmnt-darkbrown mb-0;
+}
+.prose h2 {
+  @apply text-3xl lg:text-4xl font-robuck text-mvmnt-darkbrown mb-0;
+}
+.prose h3 {
+  @apply text-2xl lg:text-3xl font-robuck text-mvmnt-darkbrown mb-0;
+}
+.prose p {
+  @apply mt-0 mb-8;
+}

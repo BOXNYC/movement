@@ -1,6 +1,7 @@
 import {DocumentTextIcon} from '@sanity/icons'
 import {format, parseISO} from 'date-fns'
 import {defineField, defineType} from 'sanity'
+import {orderRankField} from '@sanity/orderable-document-list'
 
 /**
  * Work schema. Define and edit the fields for the 'work' content type.
@@ -13,6 +14,7 @@ export const work = defineType({
   icon: DocumentTextIcon,
   type: 'document',
   fields: [
+    orderRankField({type: 'work'}),
     defineField({
       name: 'title',
       title: 'Title',

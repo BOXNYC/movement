@@ -127,6 +127,7 @@ export const menuItemsQuery = defineQuery(`
 
 const workFields = /* groq */ `
   _id,
+  orderRank,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),
   "subtitle": subtitle,
@@ -140,13 +141,13 @@ const workFields = /* groq */ `
 `
 
 export const allWorkQuery = defineQuery(`
-  *[_type == "work" && defined(slug.current)] | order(date desc, _updatedAt desc) {
+  *[_type == "work" && defined(slug.current)] | order(orderRank) {
     ${workFields}
   }
 `)
 
 export const moreWorkQuery = defineQuery(`
-  *[_type == "work" && _id != $skip && defined(slug.current)] | order(date desc, _updatedAt desc) [0...$limit] {
+  *[_type == "work" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {
     ${workFields}
   }
 `)
@@ -195,7 +196,7 @@ export const workQuery = defineQuery(`
 `)
 
 export const featuredWorkQuery = defineQuery(`
-  *[_type == "work" && featured == true && defined(slug.current)] | order(date desc, _updatedAt desc) {
+  *[_type == "work" && featured == true && defined(slug.current)] | order(orderRank) {
     ${workFields}
   }
 `)
@@ -203,4 +204,21 @@ export const featuredWorkQuery = defineQuery(`
 export const workPagesSlugs = defineQuery(`
   *[_type == "work" && defined(slug.current)]
   {"slug": slug.current}
+`)
+
+export const adjacentWorkQuery = defineQuery(`
+  {
+    "previous": *[_type == "work" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      "slug": slug.current,
+      coverImage
+    },
+    "next": *[_type == "work" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      "slug": slug.current,
+      coverImage
+    }
+  }
 `)

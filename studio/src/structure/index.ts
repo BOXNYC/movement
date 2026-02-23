@@ -1,6 +1,7 @@
 import {CogIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 import pluralize from 'pluralize-esm'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 
 /**
  * Structure builder is useful whenever you want to control how documents are grouped and
@@ -8,14 +9,21 @@ import pluralize from 'pluralize-esm'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'assist.instruction.context']
+const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'work']
 
-export const structure: StructureResolver = (S: StructureBuilder) =>
+export const structure: StructureResolver = (S, context) =>
   S.list()
     .title('Website Content')
     .items([
+      // Orderable Work list with drag-and-drop sorting
+      orderableDocumentListDeskItem({
+        type: 'work',
+        title: 'Work',
+        S,
+        context,
+      }),
       ...S.documentTypeListItems()
-        // Remove the "assist.instruction.context" and "settings" content  from the list of content types
+        // Remove disabled types from the list of content types
         .filter((listItem: any) => !DISABLED_TYPES.includes(listItem.getId()))
         // Pluralize the title of each document type.  This is not required but just an option to consider.
         .map((listItem) => {
