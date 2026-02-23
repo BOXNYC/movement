@@ -154,6 +154,7 @@ export const menuItemsQuery = defineQuery(`
 
 const workFields = /* groq */ `
   _id,
+  _type,
   orderRank,
   "status": select(_originalId in path("drafts.**") => "draft", "published"),
   "title": coalesce(title, "Untitled"),

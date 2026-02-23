@@ -1,10 +1,15 @@
 import BlockRenderer from '@/app/components/BlockRenderer'
-import {GetPageQueryResult} from '@/sanity.types'
 import {dataAttr} from '@/sanity/lib/utils'
 import {PageBuilderSection} from '@/sanity/lib/types'
 
+interface PageWithPageBuilder {
+  _id: string
+  _type: string
+  pageBuilder: PageBuilderSection[] | null
+}
+
 type PageBuilderPageProps = {
-  page: GetPageQueryResult
+  page: PageWithPageBuilder
 }
 
 /**
