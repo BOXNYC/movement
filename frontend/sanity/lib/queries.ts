@@ -221,6 +221,13 @@ export const adjacentWorkQuery = defineQuery(`
       subtitle,
       "slug": slug.current,
       coverImage
+    },
+    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {
+      _id,
+      "title": coalesce(title, "Untitled"),
+      subtitle,
+      "slug": slug.current,
+      coverImage
     }
   }
 `)

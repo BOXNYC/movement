@@ -144,7 +144,7 @@ export default async function WorkPage(props: Props) {
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">
                 <aside>
-                  <Suspense>{work.orderRank && await WorkNavigation({currentOrderRank: work.orderRank})}</Suspense>
+                  <Suspense>{work.orderRank && await WorkNavigation({currentOrderRank: work.orderRank, currentId: work._id})}</Suspense>
                 </aside>
               </div>
             </div>
