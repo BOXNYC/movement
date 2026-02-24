@@ -9,6 +9,7 @@ import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
 import VideoEmbed from '@/app/components/VideoEmbed'
 import PageBuilder from '@/app/components/PageBuilder'
+import IframeModal from '@/app/components/IframeModal'
 import {sanityFetch} from '@/sanity/lib/live'
 import {workPagesSlugs, workQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage, toCrop, toHotspot} from '@/sanity/lib/utils'
@@ -140,6 +141,9 @@ export default async function WorkPage(props: Props) {
             )}
             {work.pageBuilder && work.pageBuilder.length > 0 && (
               <PageBuilder page={work} />
+            )}
+            {work.iframes && work.iframes.length > 0 && (
+              <IframeModal iframes={work.iframes} />
             )}
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">
