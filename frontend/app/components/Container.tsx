@@ -2,6 +2,7 @@
 
 import { cn } from "@/utils/className";
 import { getThemeFromPath } from "@/utils/theme";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Container({ children, className }: { children: React.ReactNode, className?: string }) {
@@ -18,9 +19,9 @@ export default function Container({ children, className }: { children: React.Rea
       </div>
       <div className="text-xs text-center text-muted">
         @2026 Movement. All rights reserved. <br className="md:hidden" />
-        <a className="opacity-50 mx-2" href="https://www.movementstrategy.com/terms-of-use" target="_blank">Terms of Use</a>
+        <Link className="opacity-50 mx-2" href="/terms-of-use" target="_blank">Terms of Use</Link>
         •
-        <a className="opacity-50 mx-2" href="https://www.movementstrategy.com/privacy-policy" target="_blank">Privacy Policy</a>
+        <Link className="opacity-50 mx-2" href="/privacy-policy" target="_blank">Privacy Policy</Link>
       </div>
     </>
   )
