@@ -237,20 +237,38 @@ export const workPagesSlugs = defineQuery(`
 
 export const adjacentWorkQuery = defineQuery(`
   {
-    "previous": *[_type == "work" && defined(slug.current) && date < $currentDate] | order(date desc) [0] {
-      _id,
-      "title": coalesce(title, "Untitled"),
-      subtitle,
-      "slug": slug.current,
-      coverImage
-    },
-    "next": *[_type == "work" && defined(slug.current) && date > $currentDate] | order(date asc) [0] {
-      _id,
-      "title": coalesce(title, "Untitled"),
-      subtitle,
-      "slug": slug.current,
-      coverImage
-    },
+    "previous": coalesce(
+      *[_type == "work" && defined(slug.current) && date < $currentDate] | order(date desc) [0] {
+        _id,
+        "title": coalesce(title, "Untitled"),
+        subtitle,
+        "slug": slug.current,
+        coverImage
+      },
+      *[_type == "work" && defined(slug.current) && _id != $currentId] | order(date desc) [0] {
+        _id,
+        "title": coalesce(title, "Untitled"),
+        subtitle,
+        "slug": slug.current,
+        coverImage
+      }
+    ),
+    "next": coalesce(
+      *[_type == "work" && defined(slug.current) && date > $currentDate] | order(date asc) [0] {
+        _id,
+        "title": coalesce(title, "Untitled"),
+        subtitle,
+        "slug": slug.current,
+        coverImage
+      },
+      *[_type == "work" && defined(slug.current) && _id != $currentId] | order(date asc) [0] {
+        _id,
+        "title": coalesce(title, "Untitled"),
+        subtitle,
+        "slug": slug.current,
+        coverImage
+      }
+    ),
     "related": *[_type == "work" && defined(slug.current) && _id != $currentId && date != $currentDate] | order(date desc) [0] {
       _id,
       "title": coalesce(title, "Untitled"),
