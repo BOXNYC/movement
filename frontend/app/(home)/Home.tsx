@@ -26,7 +26,7 @@ export default function Home({
   return (
     <>
       <div id="intro-overlay" className="fixed inset-0 z-50 bg-[#F9FAF0] flex items-center justify-center transition-opacity duration-1000">
-        <video id="intro-video" poster="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-hero.jpg" className="h-full w-auto max-w-none object-cover" playsInline muted>
+        <video id="intro-video" poster="/home/movement-hero.jpg" className="h-full w-auto max-w-none object-cover" playsInline muted>
           <source src="https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-hero.mp4" type="video/mp4" />
         </video>
       </div>

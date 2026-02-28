@@ -203,12 +203,12 @@ export function init(): (() => void) | undefined {
     lerpFactor: 0.025,
     outsideColors: [0x41a422, 0xe8fd73, 0xfd6b30, 0xc3dfdf, 0xfaa4f3, 0x605ff0],
     insideImages: [
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo-1.jpg",
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo-2.jpg",
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo-3.jpg",
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo-4.jpg",
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo-5.jpg",
-      "https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/movement-logo.jpg"
+      "/home/movement-logo-1.jpg",
+      "/home/movement-logo-2.jpg",
+      "/home/movement-logo-3.jpg",
+      "/home/movement-logo-4.jpg",
+      "/home/movement-logo-5.jpg",
+      "/home/movement-logo.jpg"
     ],
     poses: [
       { position: { x: 0, y: -60, z: -20 }, rotationDeg: { x: 10, y: 15, z: 0 }, scale: { x: 5, y: 5, z: 5 } },
@@ -1672,7 +1672,7 @@ export function init(): (() => void) | undefined {
 
   createElements();
 
-  fontLoader.load('https://39cf74b4a2d6d5dff0a4-775c46aca7cd1526d10918b0d705fa34.ssl.cf2.rackcdn.com/movement/Barlow%20Condensed%20ExtraBold_Regular.json', function (font) {
+  fontLoader.load('/home/Barlow%20Condensed%20ExtraBold_Regular.json', function (font) {
     const textData = [
       { index: 1, content: "SOCIAL MOVES THE WORLD.<br />MOVEMENT HELPS BRANDS<br />MOVE WITH IT.", y: 25, zOffset: 0, xOffset: -20, yRotate: Math.PI / 7 },
       { index: 2, content: "FROM SOCIAL AS A CHANNEL,<br />TO SOCIAL AS THE CORE OF<br />BRAND STRATEGY.", y: 20, zOffset: 0 },
