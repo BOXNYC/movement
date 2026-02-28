@@ -15,9 +15,9 @@ const classes = {
 
 interface IframeItem {
   _key: string
-  title: string | null
+  title?: string | null
   description?: string | null
-  url: string | null
+  url?: string | null
 }
 
 interface IframeModalProps {
