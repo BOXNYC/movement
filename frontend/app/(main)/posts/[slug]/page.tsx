@@ -7,6 +7,7 @@ import Avatar from '@/app/components/Avatar'
 import {PostNavigation} from '@/app/components/Posts'
 import PortableText from '@/app/components/PortableText'
 import Image from '@/app/components/SanityImage'
+import VideoEmbed from '@/app/components/VideoEmbed'
 import {sanityFetch} from '@/sanity/lib/live'
 import {postPagesSlugs, postQuery} from '@/sanity/lib/queries'
 import {resolveOpenGraphImage, toCrop, toHotspot} from '@/sanity/lib/utils'
@@ -95,7 +96,14 @@ export default async function PostPage(props: Props) {
           </div>
           <article className="gap-6 grid max-w-4xl">
             <div className="">
-              {post?.coverImage && (
+              {post?.videoEmbed?.url ? (
+                <VideoEmbed
+                  url={post.videoEmbed.url}
+                  title={post.videoEmbed.title}
+                  aspectRatio={post.videoEmbed.aspectRatio}
+                  className="w-full"
+                />
+              ) : post?.coverImage ? (
                 <Image
                   id={post.coverImage.asset?._ref || ''}
                   alt={post.coverImage.alt || ''}
@@ -106,7 +114,7 @@ export default async function PostPage(props: Props) {
                   hotspot={toHotspot(post.coverImage.hotspot)}
                   crop={toCrop(post.coverImage.crop)}
                 />
-              )}
+              ) : null}
             </div>
             {post.content?.length && (
               <PortableText

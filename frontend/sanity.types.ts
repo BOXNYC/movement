@@ -830,10 +830,10 @@ export type SitemapDataResult = Array<
 
 // Source: sanity/lib/queries.ts
 // Variable: allPostsQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(orderRank) {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  videoEmbed,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type AllPostsQueryResult = Array<{
   _id: string
-  orderRank: null
+  _createdAt: string
   status: 'draft' | 'published'
   title: string | 'Untitled'
   slug: string | null
@@ -846,6 +846,7 @@ export type AllPostsQueryResult = Array<{
     alt?: string
     _type: 'image'
   } | null
+  videoEmbed: null
   date: string
   author: {
     firstName: string | null
@@ -863,10 +864,10 @@ export type AllPostsQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: recentPostsQuery
-// Query: *[_type == "post" && defined(slug.current)] | order(orderRank) [0...5] {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [0...5] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  videoEmbed,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type RecentPostsQueryResult = Array<{
   _id: string
-  orderRank: null
+  _createdAt: string
   status: 'draft' | 'published'
   title: string | 'Untitled'
   slug: string | null
@@ -879,6 +880,7 @@ export type RecentPostsQueryResult = Array<{
     alt?: string
     _type: 'image'
   } | null
+  videoEmbed: null
   date: string
   author: {
     firstName: string | null
@@ -896,10 +898,10 @@ export type RecentPostsQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: morePostsQuery
-// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && _id != $skip && defined(slug.current)] | order(_createdAt desc) [0...$limit] {      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  videoEmbed,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type MorePostsQueryResult = Array<{
   _id: string
-  orderRank: null
+  _createdAt: string
   status: 'draft' | 'published'
   title: string | 'Untitled'
   slug: string | null
@@ -912,6 +914,7 @@ export type MorePostsQueryResult = Array<{
     alt?: string
     _type: 'image'
   } | null
+  videoEmbed: null
   date: string
   author: {
     firstName: string | null
@@ -929,7 +932,7 @@ export type MorePostsQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: postQuery
-// Query: *[_type == "post" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "post" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  _createdAt,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  videoEmbed,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type PostQueryResult = {
   content: Array<
     | {
@@ -965,7 +968,7 @@ export type PostQueryResult = {
       }
   > | null
   _id: string
-  orderRank: null
+  _createdAt: string
   status: 'draft' | 'published'
   title: string | 'Untitled'
   slug: string | null
@@ -978,6 +981,7 @@ export type PostQueryResult = {
     alt?: string
     _type: 'image'
   } | null
+  videoEmbed: null
   date: string
   author: {
     firstName: string | null
@@ -1002,12 +1006,12 @@ export type PostPagesSlugsResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: adjacentPostQuery
-// Query: {    "previous": *[_type == "post" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      excerpt,      "slug": slug.current,      coverImage    },    "next": *[_type == "post" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {      _id,      "title": coalesce(title, "Untitled"),      excerpt,      "slug": slug.current,      coverImage    },    "related": *[_type == "post" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {      _id,      "title": coalesce(title, "Untitled"),      excerpt,      "slug": slug.current,      coverImage    }  }
+// Query: {    "previous": *[_type == "post" && defined(slug.current) && _createdAt > $currentCreatedAt] | order(_createdAt asc) [0] {      _id,      "title": coalesce(title, "Untitled"),      _createdAt,      "slug": slug.current,      coverImage    },    "next": *[_type == "post" && defined(slug.current) && _createdAt < $currentCreatedAt] | order(_createdAt desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      _createdAt,      "slug": slug.current,      coverImage    },    "related": *[_type == "post" && defined(slug.current) && _id != $currentId && _createdAt != $currentCreatedAt] | order(_createdAt desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      _createdAt,      "slug": slug.current,      coverImage    }  }
 export type AdjacentPostQueryResult = {
   previous: {
     _id: string
     title: string | 'Untitled'
-    excerpt: string | null
+    _createdAt: string
     slug: string | null
     coverImage: {
       asset?: SanityImageAssetReference
@@ -1021,7 +1025,7 @@ export type AdjacentPostQueryResult = {
   next: {
     _id: string
     title: string | 'Untitled'
-    excerpt: string | null
+    _createdAt: string
     slug: string | null
     coverImage: {
       asset?: SanityImageAssetReference
@@ -1035,7 +1039,7 @@ export type AdjacentPostQueryResult = {
   related: {
     _id: string
     title: string | 'Untitled'
-    excerpt: string | null
+    _createdAt: string
     slug: string | null
     coverImage: {
       asset?: SanityImageAssetReference
@@ -1069,9 +1073,10 @@ export type MenuItemsQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: allWorkQuery
-// Query: *[_type == "work" && defined(slug.current)] | order(orderRank) {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "work" && defined(slug.current)] | order(orderRank) {      _id,  _type,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type AllWorkQueryResult = Array<{
   _id: string
+  _type: 'work'
   orderRank: null
   status: 'draft' | 'published'
   title: string | 'Untitled'
@@ -1105,9 +1110,10 @@ export type AllWorkQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: moreWorkQuery
-// Query: *[_type == "work" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "work" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {      _id,  _type,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type MoreWorkQueryResult = Array<{
   _id: string
+  _type: 'work'
   orderRank: null
   status: 'draft' | 'published'
   title: string | 'Untitled'
@@ -1141,7 +1147,7 @@ export type MoreWorkQueryResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: workQuery
-// Query: *[_type == "work" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},    video->{      _id,      title,      description,      videoUrl,      "videoFileUrl": videoFile.asset->url,      thumbnail,      duration    },    videoEmbed,    iframes,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
+// Query: *[_type == "work" && slug.current == $slug] [0] {    content[]{    ...,    markDefs[]{      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }    }  },      _id,  _type,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},    video->{      _id,      title,      description,      videoUrl,      "videoFileUrl": videoFile.asset->url,      thumbnail,      duration    },    videoEmbed,    iframes,    "pageBuilder": pageBuilder[]{      ...,      _type == "callToAction" => {        ...,        button {          ...,            link {      ...,        _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }      }        }      },      _type == "infoSection" => {        content[]{          ...,          markDefs[]{            ...,              _type == "link" => {    "page": page->slug.current,    "post": post->slug.current  }          }        }      },    },  }
 export type WorkQueryResult = {
   content: Array<
     | {
@@ -1177,6 +1183,7 @@ export type WorkQueryResult = {
       }
   > | null
   _id: string
+  _type: 'work'
   orderRank: null
   status: 'draft' | 'published'
   title: string | 'Untitled'
@@ -1301,9 +1308,10 @@ export type WorkQueryResult = {
 
 // Source: sanity/lib/queries.ts
 // Variable: featuredWorkQuery
-// Query: *[_type == "work" && featured == true && defined(slug.current)] | order(orderRank) {      _id,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
+// Query: *[_type == "work" && featured == true && defined(slug.current)] | order(orderRank) {      _id,  _type,  orderRank,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "subtitle": subtitle,  "slug": slug.current,  excerpt,  coverImage,  tags,  featured,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type FeaturedWorkQueryResult = Array<{
   _id: string
+  _type: 'work'
   orderRank: null
   status: 'draft' | 'published'
   title: string | 'Untitled'
@@ -1344,7 +1352,7 @@ export type WorkPagesSlugsResult = Array<{
 
 // Source: sanity/lib/queries.ts
 // Variable: adjacentWorkQuery
-// Query: {    "previous": *[_type == "work" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    },    "next": *[_type == "work" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    },    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    }  }
+// Query: {    "previous": *[_type == "work" && defined(slug.current) && date < $currentDate] | order(date desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    },    "next": *[_type == "work" && defined(slug.current) && date > $currentDate] | order(date asc) [0] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    },    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && date != $currentDate] | order(date desc) [0] {      _id,      "title": coalesce(title, "Untitled"),      subtitle,      "slug": slug.current,      coverImage    }  }
 export type AdjacentWorkQueryResult = {
   previous: {
     _id: string
@@ -1397,19 +1405,19 @@ declare module '@sanity/client' {
     '*[_type == "settings"][0]': SettingsQueryResult
     '\n  *[_type == \'page\' && slug.current == $slug][0]{\n    _id,\n    _type,\n    name,\n    slug,\n    heading,\n    subheading,\n    parenthetical,\n    content[]{\n      ...,\n      markDefs[]{\n        ...,\n        \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n    },\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': GetPageQueryResult
     '\n  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {\n    "slug": slug.current,\n    _type,\n    _updatedAt,\n  }\n': SitemapDataResult
-    '\n  *[_type == "post" && defined(slug.current)] | order(orderRank) {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
-    '\n  *[_type == "post" && defined(slug.current)] | order(orderRank) [0...5] {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': RecentPostsQueryResult
-    '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
-    '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
+    '\n  *[_type == "post" && defined(slug.current)] | order(_createdAt desc) {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllPostsQueryResult
+    '\n  *[_type == "post" && defined(slug.current)] | order(_createdAt desc) [0...5] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': RecentPostsQueryResult
+    '\n  *[_type == "post" && _id != $skip && defined(slug.current)] | order(_createdAt desc) [0...$limit] {\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MorePostsQueryResult
+    '\n  *[_type == "post" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  _createdAt,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  videoEmbed,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': PostQueryResult
     '\n  *[_type == "post" && defined(slug.current)]\n  {"slug": slug.current}\n': PostPagesSlugsResult
-    '\n  {\n    "previous": *[_type == "post" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      excerpt,\n      "slug": slug.current,\n      coverImage\n    },\n    "next": *[_type == "post" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      excerpt,\n      "slug": slug.current,\n      coverImage\n    },\n    "related": *[_type == "post" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      excerpt,\n      "slug": slug.current,\n      coverImage\n    }\n  }\n': AdjacentPostQueryResult
+    '\n  {\n    "previous": *[_type == "post" && defined(slug.current) && _createdAt > $currentCreatedAt] | order(_createdAt asc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      _createdAt,\n      "slug": slug.current,\n      coverImage\n    },\n    "next": *[_type == "post" && defined(slug.current) && _createdAt < $currentCreatedAt] | order(_createdAt desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      _createdAt,\n      "slug": slug.current,\n      coverImage\n    },\n    "related": *[_type == "post" && defined(slug.current) && _id != $currentId && _createdAt != $currentCreatedAt] | order(_createdAt desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      _createdAt,\n      "slug": slug.current,\n      coverImage\n    }\n  }\n': AdjacentPostQueryResult
     '\n  *[_type == "page" && defined(slug.current)]\n  {"slug": slug.current}\n': PagesSlugsResult
     '\n  *[_type == "page" && menuItem.enabled == true] | order(coalesce(menuItem.weight, 0) asc) {\n    _id,\n    name,\n    "slug": slug.current,\n    "title": coalesce(menuItem.title, name),\n    "target": menuItem.target,\n    "weight": coalesce(menuItem.weight, 0)\n  }\n': MenuItemsQueryResult
-    '\n  *[_type == "work" && defined(slug.current)] | order(orderRank) {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllWorkQueryResult
-    '\n  *[_type == "work" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MoreWorkQueryResult
-    '\n  *[_type == "work" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n    video->{\n      _id,\n      title,\n      description,\n      videoUrl,\n      "videoFileUrl": videoFile.asset->url,\n      thumbnail,\n      duration\n    },\n    videoEmbed,\n    iframes,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': WorkQueryResult
-    '\n  *[_type == "work" && featured == true && defined(slug.current)] | order(orderRank) {\n    \n  _id,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': FeaturedWorkQueryResult
+    '\n  *[_type == "work" && defined(slug.current)] | order(orderRank) {\n    \n  _id,\n  _type,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': AllWorkQueryResult
+    '\n  *[_type == "work" && _id != $skip && defined(slug.current)] | order(orderRank) [0...$limit] {\n    \n  _id,\n  _type,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': MoreWorkQueryResult
+    '\n  *[_type == "work" && slug.current == $slug] [0] {\n    content[]{\n    ...,\n    markDefs[]{\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n    }\n  },\n    \n  _id,\n  _type,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n    video->{\n      _id,\n      title,\n      description,\n      videoUrl,\n      "videoFileUrl": videoFile.asset->url,\n      thumbnail,\n      duration\n    },\n    videoEmbed,\n    iframes,\n    "pageBuilder": pageBuilder[]{\n      ...,\n      _type == "callToAction" => {\n        ...,\n        button {\n          ...,\n          \n  link {\n      ...,\n      \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n      }\n\n        }\n      },\n      _type == "infoSection" => {\n        content[]{\n          ...,\n          markDefs[]{\n            ...,\n            \n  _type == "link" => {\n    "page": page->slug.current,\n    "post": post->slug.current\n  }\n\n          }\n        }\n      },\n    },\n  }\n': WorkQueryResult
+    '\n  *[_type == "work" && featured == true && defined(slug.current)] | order(orderRank) {\n    \n  _id,\n  _type,\n  orderRank,\n  "status": select(_originalId in path("drafts.**") => "draft", "published"),\n  "title": coalesce(title, "Untitled"),\n  "subtitle": subtitle,\n  "slug": slug.current,\n  excerpt,\n  coverImage,\n  tags,\n  featured,\n  "date": coalesce(date, _updatedAt),\n  "author": author->{firstName, lastName, picture},\n\n  }\n': FeaturedWorkQueryResult
     '\n  *[_type == "work" && defined(slug.current)]\n  {"slug": slug.current}\n': WorkPagesSlugsResult
-    '\n  {\n    "previous": *[_type == "work" && defined(slug.current) && orderRank < $currentOrderRank] | order(orderRank desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    },\n    "next": *[_type == "work" && defined(slug.current) && orderRank > $currentOrderRank] | order(orderRank asc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    },\n    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && orderRank != $currentOrderRank] | order(orderRank) [2] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    }\n  }\n': AdjacentWorkQueryResult
+    '\n  {\n    "previous": *[_type == "work" && defined(slug.current) && date < $currentDate] | order(date desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    },\n    "next": *[_type == "work" && defined(slug.current) && date > $currentDate] | order(date asc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    },\n    "related": *[_type == "work" && defined(slug.current) && _id != $currentId && date != $currentDate] | order(date desc) [0] {\n      _id,\n      "title": coalesce(title, "Untitled"),\n      subtitle,\n      "slug": slug.current,\n      coverImage\n    }\n  }\n': AdjacentWorkQueryResult
   }
 }

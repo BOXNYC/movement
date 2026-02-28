@@ -143,7 +143,7 @@ export default async function WorkPage(props: Props) {
               <PageBuilder page={work} />
             )}
             {work.iframes && work.iframes.length > 0 && (
-              <IframeModal iframes={work.iframes} />
+              <IframeModal iframes={work.iframes} chrome={false} />
             )}
             <div className="">
               <div className="py-12 lg:py-24 grid gap-12">

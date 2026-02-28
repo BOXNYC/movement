@@ -70,6 +70,11 @@ export const post = defineType({
       ],
     }),
     defineField({
+      name: 'videoEmbed',
+      title: 'Video Embed',
+      type: 'videoEmbed',
+    }),
+    defineField({
       name: 'date',
       title: 'Date',
       type: 'datetime',

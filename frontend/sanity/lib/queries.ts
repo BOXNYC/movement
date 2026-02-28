@@ -10,6 +10,7 @@ const postFields = /* groq */ `
   "slug": slug.current,
   excerpt,
   coverImage,
+  videoEmbed,
   "date": coalesce(date, _updatedAt),
   "author": author->{firstName, lastName, picture},
 `
