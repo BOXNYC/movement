@@ -105,22 +105,10 @@ export default function IframeModal({iframes, chrome = true}: IframeModalProps) 
                   </p>
                 )}
                 {!!chrome && <div className="flex-1 min-h-0">
-                  <iframe
-                    src={iframe.url}
-                    title={iframe.title || 'Embedded content'}
-                    className="w-full h-full"
-                    allowFullScreen
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  />
+                  <IFrame {...iframe} />
                   {!chrome && <CloseButton onClick={handleClose} />}
                 </div>}
-                {!chrome && <iframe
-                  src={iframe.url}
-                  title={iframe.title || 'Embedded content'}
-                  className="w-full h-full"
-                  allowFullScreen
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                />}
+                {!chrome && <IFrame {...iframe} />}
                 {!chrome && <CloseButton className="absolute top-2 right-2 rounded-full scale-200" onClick={handleClose} />}
               </div>
             </div>
@@ -153,5 +141,20 @@ function CloseButton({onClick, className}: {onClick: () => void, className?: str
           <line x1="6" y1="6" x2="18" y2="18" />
         </svg>
       </button>
+  );
+}
+
+function IFrame(iframe: IframeItem) {
+  if (!iframe.url) {
+    return null
+  }
+  return (
+    <iframe
+      src={iframe.url}
+      title={iframe.title || 'Embedded content'}
+      className="w-full h-full"
+      allowFullScreen
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; microphone; camera"
+    />
   );
 }
